@@ -690,7 +690,12 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
     });
     if (!confirmed) return;
     await fetch('/auth/logout', { method: 'POST' });
-    window.location.href = '/';
+    // Bypass service worker cache
+    if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map(k => caches.delete(k)));
+    }
+    window.location.replace('/');
 });
 
 function openSaleModal(sale, clientId) {

@@ -1,9 +1,8 @@
 // AURA PWA Service Worker
-const CACHE_NAME = 'aura-v1';
+const CACHE_NAME = 'aura-v2';
 
-// Assets to pre-cache (app shell)
+// Assets to pre-cache (app shell) — NOT / because it's dynamic (login/setup/app)
 const SHELL_ASSETS = [
-    '/',
     '/public/css/style.css',
     '/public/js/app.js',
     '/public/icons/icon-192.png',
@@ -47,6 +46,14 @@ self.addEventListener('fetch', event => {
         url.pathname.startsWith('/accounting/') ||
         url.pathname.startsWith('/settings/') ||
         url.pathname.startsWith('/auth/')) {
+        return;
+    }
+
+    // Root page — network-first (dynamic: login/setup/app)
+    if (url.pathname === '/' || url.pathname === '') {
+        event.respondWith(
+            fetch(event.request).catch(() => caches.match(event.request))
+        );
         return;
     }
 
