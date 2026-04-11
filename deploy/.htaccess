@@ -1,0 +1,11 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /aura/
+
+# Statické soubory servírovat přímo
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Vše ostatní → index.php
+RewriteRule ^ index.php [L]

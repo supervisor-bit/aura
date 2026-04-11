@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= APP_NAME ?> — Přihlášení</title>
+    <title><?= APP_NAME ?> — <?= !empty($needsSetup) ? 'Nastavení' : 'Přihlášení' ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <style>
@@ -216,7 +216,7 @@
     <div class="login-brand">
         <div class="login-logo">A</div>
         <div class="login-title"><?= APP_NAME ?></div>
-        <div class="login-subtitle">Kadeřnický salon</div>
+        <div class="login-subtitle"><?= !empty($needsSetup) ? 'Vytvořte si přihlašovací údaje' : 'Kadeřnický salon' ?></div>
     </div>
 
     <form class="login-form" id="login-form" autocomplete="on">
@@ -230,44 +230,64 @@
         </div>
         <div class="login-field">
             <label for="login-pass">Heslo</label>
-            <input type="password" id="login-pass" name="password" placeholder="Heslo" autocomplete="current-password" required>
+            <input type="password" id="login-pass" name="password" placeholder="Heslo" autocomplete="<?= !empty($needsSetup) ? 'new-password' : 'current-password' ?>" required>
         </div>
+        <?php if (!empty($needsSetup)): ?>
+        <div class="login-field">
+            <label for="login-pass2">Heslo znovu</label>
+            <input type="password" id="login-pass2" name="password2" placeholder="Zopakujte heslo" autocomplete="new-password" required>
+        </div>
+        <?php endif; ?>
         <button type="submit" class="login-btn" id="login-btn">
-            <span class="btn-text">Přihlásit se</span>
+            <span class="btn-text"><?= !empty($needsSetup) ? 'Vytvořit účet' : 'Přihlásit se' ?></span>
             <div class="spinner"></div>
         </button>
     </form>
 </div>
 
 <script>
+const isSetup = <?= !empty($needsSetup) ? 'true' : 'false' ?>;
+
 document.getElementById('login-form').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     const btn = document.getElementById('login-btn');
     const errBox = document.getElementById('login-error');
     const errMsg = document.getElementById('login-error-msg');
 
+    const password = document.getElementById('login-pass').value;
+
+    if (isSetup) {
+        const password2 = document.getElementById('login-pass2').value;
+        if (password !== password2) {
+            errMsg.textContent = 'Hesla se neshodují';
+            errBox.classList.add('visible');
+            return;
+        }
+    }
+
     btn.classList.add('loading');
     btn.disabled = true;
     errBox.classList.remove('visible');
 
     try {
-        const res = await fetch('/auth/login', {
+        const endpoint = isSetup ? '/auth/setup' : '/auth/login';
+        const res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: document.getElementById('login-user').value,
-                password: document.getElementById('login-pass').value
+                password: password
             })
         });
         const data = await res.json();
 
         if (res.ok) {
-            // Success — redirect to app
             window.location.href = '/';
         } else {
-            errMsg.textContent = data.error || 'Přihlášení se nezdařilo';
+            errMsg.textContent = data.error || (isSetup ? 'Vytvoření účtu se nezdařilo' : 'Přihlášení se nezdařilo');
             errBox.classList.add('visible');
             document.getElementById('login-pass').value = '';
+            if (isSetup) document.getElementById('login-pass2').value = '';
             document.getElementById('login-pass').focus();
         }
     } catch (e) {

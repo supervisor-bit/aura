@@ -123,6 +123,29 @@ $routes = [
 $routeKey = "{$method}:{$resource}:{$action}";
 
 // ─── Auth routes (veřejné) ────────────────────────────────────────────────────
+
+// Kontrola, zda existují přihlašovací údaje
+$stmSetup = db()->query("SELECT COUNT(*) FROM app_settings WHERE setting_key = 'auth_user' AND setting_value IS NOT NULL AND setting_value != ''");
+$isSetupDone = (int)$stmSetup->fetchColumn() > 0;
+
+if ($routeKey === 'POST:auth:setup') {
+    if ($isSetupDone) {
+        json_response(['error' => 'Účet již existuje'], 400);
+    }
+    $user = trim($jsonBody['username'] ?? '');
+    $pass = $jsonBody['password'] ?? '';
+    if (strlen($user) < 2) json_response(['error' => 'Uživatelské jméno musí mít alespoň 2 znaky'], 400);
+    if (strlen($pass) < 4) json_response(['error' => 'Heslo musí mít alespoň 4 znaky'], 400);
+
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    $stm = db()->prepare("INSERT INTO app_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+    $stm->execute(['auth_user', $user]);
+    $stm->execute(['auth_pass', $hash]);
+    $_SESSION['logged_in'] = true;
+    $_SESSION['user'] = $user;
+    json_response(['message' => 'Účet vytvořen']);
+}
+
 if ($routeKey === 'POST:auth:login') {
     $user = $jsonBody['username'] ?? '';
     $pass = $jsonBody['password'] ?? '';
@@ -150,8 +173,8 @@ if ($routeKey === 'GET:auth:check') {
 // ─── Ověření přihlášení ───────────────────────────────────────────────────────
 if (empty($_SESSION['logged_in'])) {
     if ($method === 'GET' && ($uri === '/' || $resource === '')) {
-        // Show login page
-        view('login');
+        // Show login page or setup page
+        view('login', ['needsSetup' => !$isSetupDone]);
         exit;
     }
     // API requests without auth
