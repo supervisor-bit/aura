@@ -1,0 +1,106 @@
+<?php
+declare(strict_types=1);
+
+class VisitController
+{
+    /** GET /visits/index/{clientId}?limit=20&offset=0&months=&from=&to= */
+    public function index(?int $id, array $body): void
+    {
+        if (!$id) {
+            json_response(['error' => 'Chybí client_id'], 400);
+        }
+        $limit    = min((int) ($_GET['limit']  ?? 20), 100);
+        $offset   = max((int) ($_GET['offset'] ?? 0), 0);
+        $months   = isset($_GET['months']) && $_GET['months'] !== '' ? (int) $_GET['months'] : null;
+        $dateFrom = isset($_GET['from']) && $_GET['from'] !== '' ? $_GET['from'] : null;
+        $dateTo   = isset($_GET['to'])   && $_GET['to']   !== '' ? $_GET['to']   : null;
+        json_response(Visit::forClient($id, $limit, $offset, $months, $dateFrom, $dateTo));
+    }
+
+    /** GET /visits/show/{id} — detail návštěvy (včetně receptury) */
+    public function show(?int $id, array $body): void
+    {
+        if (!$id) {
+            json_response(['error' => 'Chybí ID'], 400);
+        }
+        $visit = Visit::find($id);
+        if (!$visit) {
+            json_response(['error' => 'Návštěva nenalezena'], 404);
+        }
+        // Dekóduj JSON recepturu
+        if ($visit['color_formula']) {
+            $visit['color_formula'] = json_decode($visit['color_formula'], true);
+        }
+        json_response($visit);
+    }
+
+    /** POST /visits/store — nová návštěva */
+    public function store(?int $id, array $body): void
+    {
+        $data = $this->validate($body ?: $_POST);
+        if (isset($data['error'])) {
+            json_response($data, 422);
+        }
+        $newId = Visit::create($data);
+        json_response(['id' => $newId, 'message' => 'Návštěva uložena'], 201);
+    }
+
+    /** POST /visits/update/{id} — uložení změn */
+    public function update(?int $id, array $body): void
+    {
+        if (!$id) {
+            json_response(['error' => 'Chybí ID'], 400);
+        }
+        $input = $body ?: $_POST;
+
+        // Pokud jde jen o změnu billing_status, nemazat ostatní pole
+        if (isset($input['billing_status']) && !isset($input['color_formula'])) {
+            $amount = isset($input['billing_amount']) ? (float)$input['billing_amount'] : null;
+            $change = isset($input['billing_change']) ? (float)$input['billing_change'] : null;
+            Visit::updateBilling($id, $input['billing_status'], $amount, $change);
+            json_response(['message' => 'Návštěva uložena']);
+            return;
+        }
+
+        $data = $this->validate($input);
+        if (isset($data['error'])) {
+            json_response($data, 422);
+        }
+        Visit::update($id, $data);
+        json_response(['message' => 'Návštěva uložena']);
+    }
+
+    /** POST /visits/delete/{id} */
+    public function delete(?int $id, array $body): void
+    {
+        if (!$id) {
+            json_response(['error' => 'Chybí ID'], 400);
+        }
+        Visit::delete($id);
+        json_response(['message' => 'Návštěva smazána']);
+    }
+
+    // ── Privátní ──────────────────────────────────────────────────────────────
+
+    private function validate(array $data): array
+    {
+        $clientId = (int)($data['client_id'] ?? 0);
+        if ($clientId <= 0) {
+            return ['error' => 'Chybí client_id'];
+        }
+        $allowedBilling = ['unpaid', 'paid', 'complimentary'];
+        $billing = $data['billing_status'] ?? 'unpaid';
+        if (!in_array($billing, $allowedBilling, true)) {
+            $billing = 'unpaid';
+        }
+        return [
+            'client_id'      => $clientId,
+            'visit_date'     => $data['visit_date']    ?? date('Y-m-d'),
+            'service_name'   => trim($data['service_name'] ?? ''),
+            'color_formula'  => $data['color_formula'] ?? null,
+            'note'           => trim($data['note']     ?? ''),
+            'price'          => isset($data['price']) ? (float)$data['price'] : null,
+            'billing_status' => $billing,
+        ];
+    }
+}
