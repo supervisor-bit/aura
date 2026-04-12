@@ -1691,6 +1691,85 @@ billingForm.addEventListener('submit', async ev => {
     }
 });
 
+// ── Statistiky ────────────────────────────────────────────────────────────────
+
+async function loadStats() {
+    const period = document.getElementById('stats-period').value;
+    loadConsumption(period);
+}
+
+async function loadConsumption(period = 'month') {
+    try {
+        const data = await api(`/stats/consumption?period=${period}`);
+        renderConsumption(data);
+    } catch (err) {
+        toast(err.message, 'error');
+    }
+}
+
+function renderConsumption(data) {
+    // Summary
+    const totalG = data.products.filter(p => p.unit === 'g').reduce((s, p) => s + p.total_grams, 0);
+    const totalMl = data.products.filter(p => p.unit === 'ml').reduce((s, p) => s + p.total_grams, 0);
+    const uniqueProducts = data.products.length;
+
+    document.getElementById('stats-summary').innerHTML = `
+        <div class="stats-card"><span class="stats-card-value">${data.total_visits}</span><span class="stats-card-label">Návštěv s recepturou</span></div>
+        <div class="stats-card"><span class="stats-card-value">${uniqueProducts}</span><span class="stats-card-label">Použitých produktů</span></div>
+        <div class="stats-card"><span class="stats-card-value">${Math.round(totalG)}g</span><span class="stats-card-label">Materiál celkem</span></div>
+        <div class="stats-card"><span class="stats-card-value">${Math.round(totalMl)}ml</span><span class="stats-card-label">Oxidant celkem</span></div>
+    `;
+
+    // Product list
+    state.statsProducts = data.products;
+    renderProductList(data.products);
+
+    // Unused
+    const unusedEl = document.getElementById('stats-unused-list');
+    if (data.unused.length) {
+        unusedEl.innerHTML = data.unused.map(u =>
+            `<div class="stats-unused-item">
+                <span>${e(u.name)}</span>
+                <span class="text-muted">${u.last_used ? fmtDate(u.last_used) : 'Nikdy nepoužito'}</span>
+            </div>`
+        ).join('');
+    } else {
+        unusedEl.innerHTML = '<span class="text-muted">Všechny produkty byly nedávno použity</span>';
+    }
+}
+
+function renderProductList(products) {
+    const list = document.getElementById('stats-product-list');
+    if (!products.length) {
+        list.innerHTML = '<span class="text-muted">Žádná data pro zvolené období</span>';
+        return;
+    }
+    const maxGrams = products[0]?.total_grams || 1;
+    list.innerHTML = products.map((p, i) =>
+        `<div class="stats-product-row">
+            <span class="stats-product-rank">${i + 1}.</span>
+            <div class="stats-product-info">
+                <div class="stats-product-name">${e(p.name)}</div>
+                <div class="stats-product-bar-wrap">
+                    <div class="stats-product-bar" style="width:${Math.round(p.total_grams / maxGrams * 100)}%"></div>
+                </div>
+            </div>
+            <span class="stats-product-amount">${Math.round(p.total_grams)}${p.unit}</span>
+            <span class="stats-product-count">${p.usage_count}×</span>
+        </div>`
+    ).join('');
+}
+
+document.getElementById('stats-period').addEventListener('change', () => {
+    loadConsumption(document.getElementById('stats-period').value);
+});
+
+document.getElementById('stats-search').addEventListener('input', ev => {
+    const q = ev.target.value.toLowerCase();
+    const filtered = (state.statsProducts || []).filter(p => p.name.toLowerCase().includes(q));
+    renderProductList(filtered);
+});
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 
 async function loadDashboard() {
@@ -1813,9 +1892,11 @@ document.querySelectorAll('.nav-rail-btn[data-view]').forEach(btn => {
         document.getElementById('main').hidden = view !== 'clients';
         document.getElementById('settings-view').hidden = view !== 'settings';
         document.getElementById('accounting-view').hidden = view !== 'accounting';
+        document.getElementById('stats-view').hidden = view !== 'stats';
         if (view === 'dashboard') loadDashboard();
         if (view === 'settings') loadCodeList();
         if (view === 'accounting') loadAccounting();
+        if (view === 'stats') loadStats();
     });
 });
 

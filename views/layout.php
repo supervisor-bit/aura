@@ -34,6 +34,9 @@
     <button class="nav-rail-btn" id="btn-quick-sale" data-tip="Rychlý prodej">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
     </button>
+    <button class="nav-rail-btn" data-view="stats" data-tip="Spotřeba materiálu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </button>
     <div style="flex:1"></div>
     <button class="nav-rail-btn" id="btn-theme-toggle" data-tip="Světlý/Tmavý režim">
         <svg id="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -446,6 +449,43 @@
         <div class="dash-section dash-section-full">
             <h3>Retence klientů <span class="dash-retention-hint">Klienti bez návštěvy déle než 6 týdnů</span></h3>
             <ul class="dash-recent" id="dash-retention"></ul>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     STATISTIKY & NÁKUPNÍ SEZNAM
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="stats-view" class="stats-view" hidden>
+    <div class="stats-header">
+        <h2>Spotřeba materiálu</h2>
+        <select id="stats-period" class="stats-period-select">
+            <option value="month">Tento měsíc</option>
+            <option value="prev-month">Minulý měsíc</option>
+            <option value="quarter">Poslední 3 měsíce</option>
+            <option value="year">Tento rok</option>
+            <option value="all">Vše</option>
+        </select>
+    </div>
+
+    <div class="stats-summary" id="stats-summary"></div>
+
+    <div class="stats-columns">
+        <!-- Levý sloupec: produkty -->
+        <div class="stats-col-main">
+            <div class="stats-section">
+                <h3>Nejpoužívanější</h3>
+                <input type="text" id="stats-search" class="stats-search" placeholder="Hledat produkt…" autocomplete="off">
+                <div id="stats-product-list" class="stats-product-list"></div>
+            </div>
+        </div>
+
+        <!-- Pravý sloupec: nepoužité -->
+        <div class="stats-col-side">
+            <div class="stats-section">
+                <h3>Nepoužité přes 3 měsíce</h3>
+                <div id="stats-unused-list" class="stats-unused-list"></div>
+            </div>
         </div>
     </div>
 </div>

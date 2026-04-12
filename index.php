@@ -117,6 +117,9 @@ $routes = [
     'POST:notes:store'   => ['NoteController', 'store'],
     'POST:notes:update'  => ['NoteController', 'update'],
     'POST:notes:delete'  => ['NoteController', 'delete'],
+
+    // Statistiky
+    'GET:stats:consumption'     => ['StatsController', 'consumption'],
 ];
 
 // ─── Dispatch ─────────────────────────────────────────────────────────────────
