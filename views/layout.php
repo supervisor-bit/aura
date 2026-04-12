@@ -279,6 +279,23 @@
 <!-- Toast notifikace -->
 <div id="toast" class="toast" hidden></div>
 
+<!-- Recipe preview modal -->
+<div id="recipe-preview-modal" class="modal-backdrop" hidden role="dialog" aria-modal="true">
+    <div class="modal modal-recipe">
+        <div class="modal-header-row">
+            <h3 id="recipe-preview-title">Receptura</h3>
+            <div class="modal-header-actions">
+                <button type="button" id="btn-recipe-copy" class="btn btn-outline btn-sm" title="Kopírovat text">Kopírovat</button>
+                <button type="button" id="btn-recipe-print" class="btn btn-outline btn-sm" title="Vytisknout">Tisk</button>
+            </div>
+        </div>
+        <div id="recipe-preview-content" class="recipe-preview-content"></div>
+        <div class="modal-footer">
+            <button type="button" id="btn-recipe-close" class="btn btn-ghost">Zavřít</button>
+        </div>
+    </div>
+</div>
+
 <!-- Confirm modal -->
 <div id="confirm-modal" class="modal-backdrop" hidden role="dialog" aria-modal="true">
     <div class="modal modal-sm">

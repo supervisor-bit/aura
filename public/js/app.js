@@ -432,6 +432,7 @@ function renderVisitCard(v) {
             <div class="visit-card-actions">
                 <button class="btn-visit-action btn-edit-visit" data-id="${v.id}" data-tip="Upravit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
                 <button class="btn-visit-action btn-copy-visit" data-id="${v.id}" data-tip="Kopírovat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="btn-visit-action btn-preview-recipe" data-id="${v.id}" data-tip="Náhled receptury"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></button>
                 <button class="btn-visit-action btn-billing-visit" data-id="${v.id}" data-status="${e(v.billing_status)}" data-tip="${isPaid ? 'Zrušit vyúčtování' : 'Vyúčtovat'}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></button>
                 ${isPaid ? `<button class="btn-visit-action btn-print-receipt" data-id="${v.id}" data-tip="Účtenka"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>` : ''}
                 <button class="btn-visit-action btn-delete-visit btn-danger-icon" data-id="${v.id}" data-tip="Smazat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
@@ -472,6 +473,12 @@ function renderVisitCard(v) {
         // ── Copy ──
         if (btn.classList.contains('btn-copy-visit')) {
             await copyVisit(+vid);
+            return;
+        }
+
+        // ── Preview recipe ──
+        if (btn.classList.contains('btn-preview-recipe')) {
+            openRecipePreview(+vid);
             return;
         }
 
@@ -1462,6 +1469,61 @@ async function saveVisit(price = null) {
         toast(err.message, 'error');
     }
 }
+
+// ── Recipe preview modal ──────────────────────────────────────────────────────
+
+async function openRecipePreview(visitId) {
+    const visit = await api(`/visits/show/${visitId}`).catch(() => null);
+    if (!visit) { toast('Návštěva nenalezena', 'error'); return; }
+
+    const formula = visit.color_formula;
+    const clientName = state.activeClientName || '';
+    const date = fmtDate(visit.visit_date);
+
+    document.getElementById('recipe-preview-title').textContent = `${clientName} · ${date}`;
+
+    let html = '';
+    if (visit.service_name) {
+        html += `<div class="rp-services">${e(visit.service_name)}</div>`;
+    }
+    if (formula?.bowls?.length) {
+        html += formula.bowls.map(bowl => {
+            const prods = (bowl.products || [])
+                .map(p => `<div class="rp-product">${e(p.name)} <strong>${p.amount}g</strong></div>`)
+                .join('');
+            const ox = bowl.oxidant
+                ? `<div class="rp-oxidant">${e(bowl.oxidant.name)} ${bowl.oxidant.ratio} → <strong>${bowl.oxidant.amount}ml</strong></div>`
+                : '';
+            return `<div class="rp-bowl">
+                <div class="rp-bowl-label" style="border-left:3px solid ${bowl.color || 'var(--color-accent)'}">${e(bowl.label || 'Miska')}</div>
+                ${prods}${ox}
+            </div>`;
+        }).join('');
+    } else {
+        html = '<span class="text-muted">Bez receptury</span>';
+    }
+    if (visit.note) {
+        html += `<div class="rp-note">${e(visit.note)}</div>`;
+    }
+
+    document.getElementById('recipe-preview-content').innerHTML = html;
+    document.getElementById('recipe-preview-modal').hidden = false;
+}
+
+document.getElementById('btn-recipe-close').addEventListener('click', () => {
+    document.getElementById('recipe-preview-modal').hidden = true;
+});
+document.getElementById('recipe-preview-modal').addEventListener('click', ev => {
+    if (ev.target === ev.currentTarget) ev.currentTarget.hidden = true;
+});
+document.getElementById('btn-recipe-copy').addEventListener('click', () => {
+    const content = document.getElementById('recipe-preview-content');
+    const text = content.innerText;
+    navigator.clipboard.writeText(text).then(() => toast('Zkopírováno do schránky'));
+});
+document.getElementById('btn-recipe-print').addEventListener('click', () => {
+    window.print();
+});
 
 // ── Billing modal ─────────────────────────────────────────────────────────────
 

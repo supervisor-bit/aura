@@ -799,6 +799,60 @@ body {
 .modal h3 { margin-bottom: 20px; font-size: 16px; }
 .modal p { font-size: 14px; color: var(--color-muted); line-height: 1.5; margin-bottom: 0; white-space: pre-line; }
 .modal-sm { width: 400px; }
+.modal-recipe { width: 580px; max-width: 95vw; }
+.modal-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal-header-row h3 { margin-bottom: 0; }
+.modal-header-actions { display: flex; gap: 6px; }
+.btn-sm { padding: 5px 14px; font-size: 12px; }
+.recipe-preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.rp-services {
+    font-size: 13px;
+    color: var(--color-muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+}
+.rp-bowl {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+}
+.rp-bowl-label {
+    font-weight: 600;
+    font-size: 13px;
+    padding-left: 8px;
+    margin-bottom: 6px;
+}
+.rp-product {
+    font-size: 13px;
+    padding: 2px 0 2px 11px;
+    color: var(--color-text);
+}
+.rp-oxidant {
+    font-size: 12px;
+    color: var(--color-muted);
+    padding: 4px 0 0 11px;
+    border-top: 1px dashed var(--color-border);
+    margin-top: 4px;
+}
+.rp-note {
+    font-size: 13px;
+    color: var(--color-muted);
+    font-style: italic;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+}
 .modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -2532,4 +2586,47 @@ kbd {
     body { flex-direction: column; }
     #sidebar { width: 100%; min-width: unset; height: 40vh; border-right: none; border-bottom: 1px solid var(--color-border); }
     #main { height: 60vh; }
+}
+
+/* ── Print ────────────────────────────────────────────────────────────────── */
+@media print {
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; background: #fff !important; }
+    body > * { display: none !important; }
+    #recipe-preview-modal {
+        display: block !important;
+        position: static !important;
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    #recipe-preview-modal .modal-recipe {
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px !important;
+        margin: 0 !important;
+        position: static !important;
+        transform: none !important;
+    }
+    #recipe-preview-modal .modal-footer,
+    #recipe-preview-modal .modal-header-actions { display: none !important; }
+    #recipe-preview-modal h3 { font-size: 20px; color: #000 !important; }
+    .rp-services { color: #333 !important; font-size: 14px; }
+    .rp-bowl {
+        border-color: #ccc !important;
+        background: #fff !important;
+        page-break-inside: avoid;
+    }
+    .rp-bowl-label { color: #000 !important; font-size: 15px; }
+    .rp-product { color: #000 !important; font-size: 14px; }
+    .rp-oxidant { color: #444 !important; font-size: 13px; }
+    .rp-note { color: #333 !important; font-size: 14px; }
+    .recipe-preview-content {
+        max-height: none !important;
+        overflow: visible !important;
+        gap: 16px;
+    }
 }
