@@ -53,7 +53,7 @@ function toast(msg, type = 'success') {
     el.className = `toast toast-${type}`;
     el.hidden = false;
     clearTimeout(el._t);
-    el._t = setTimeout(() => { el.hidden = true; }, 3000);
+    el._t = setTimeout(() => { el.hidden = true; }, type === 'error' ? 6000 : 3000);
 }
 
 // ── Modální confirm / prompt ──────────────────────────────────────────────────
@@ -440,34 +440,43 @@ function renderVisitCard(v) {
     </li>`;
 }
 
-function attachVisitActions(container, clientId) {
-    // Collapse/expand toggle
-    container.querySelectorAll('.visit-card-header[role="button"]').forEach(hdr => {
-        hdr.addEventListener('click', () => {
+// Delegovaný handler na #visit-list — nastaví se jednou, funguje pro všechny karty
+(function initVisitDelegation() {
+    const ul = document.getElementById('visit-list');
+    ul.addEventListener('click', async ev => {
+        const target = ev.target;
+
+        // ── Collapse / expand toggle ──
+        const hdr = target.closest('.visit-card-header[role="button"]');
+        if (hdr && !target.closest('.btn-visit-action')) {
             const card = hdr.closest('.visit-card');
             const body = card.querySelector('.visit-card-body');
             const open = !body.hidden;
             body.hidden = open;
             card.classList.toggle('visit-open', !open);
-        });
-    });
+            return;
+        }
 
-    container.querySelectorAll('.btn-edit-visit').forEach(btn =>
-        btn.addEventListener('click', ev => {
-            ev.stopPropagation();
-            openFormulaEditor(+btn.dataset.id);
-        }));
+        const btn = target.closest('.btn-visit-action');
+        if (!btn) return;
+        ev.stopPropagation();
+        const clientId = state.activeClientId;
+        const vid = btn.dataset.id;
 
-    container.querySelectorAll('.btn-copy-visit').forEach(btn =>
-        btn.addEventListener('click', async ev => {
-            ev.stopPropagation();
-            await copyVisit(+btn.dataset.id);
-        }));
+        // ── Edit ──
+        if (btn.classList.contains('btn-edit-visit')) {
+            openFormulaEditor(+vid);
+            return;
+        }
 
-    container.querySelectorAll('.btn-billing-visit').forEach(btn =>
-        btn.addEventListener('click', async ev => {
-            ev.stopPropagation();
-            const vid = btn.dataset.id;
+        // ── Copy ──
+        if (btn.classList.contains('btn-copy-visit')) {
+            await copyVisit(+vid);
+            return;
+        }
+
+        // ── Billing ──
+        if (btn.classList.contains('btn-billing-visit')) {
             const current = btn.dataset.status;
             if (current === 'paid') {
                 const ok = await modalConfirm('Zrušit vyúčtování této návštěvy? Případné prodeje produktů budou také smazány.', {
@@ -480,7 +489,6 @@ function attachVisitActions(container, clientId) {
                     method: 'POST',
                     body: JSON.stringify({ client_id: clientId, billing_status: 'unpaid', billing_amount: null, billing_change: null }),
                 }).catch(err => toast(err.message, 'error'));
-                // Delete linked sale
                 await api(`/sales/delete-by-visit/${vid}`, { method: 'POST' }).catch(() => {});
                 toast('Vyúčtování zrušeno');
                 loadVisitHistory(clientId);
@@ -488,11 +496,11 @@ function attachVisitActions(container, clientId) {
             } else {
                 openBillingModal(vid, clientId);
             }
-        }));
+            return;
+        }
 
-    container.querySelectorAll('.btn-delete-visit').forEach(btn =>
-        btn.addEventListener('click', async ev => {
-            ev.stopPropagation();
+        // ── Delete ──
+        if (btn.classList.contains('btn-delete-visit')) {
             const ok = await modalConfirm('Opravdu smazat tuto návštěvu? Tuto akci nelze vrátit.', {
                 title: 'Smazat návštěvu',
                 okText: 'Smazat',
@@ -500,22 +508,22 @@ function attachVisitActions(container, clientId) {
             });
             if (!ok) return;
             try {
-                await api(`/visits/delete/${btn.dataset.id}`, { method: 'POST' });
+                await api(`/visits/delete/${vid}`, { method: 'POST' });
                 toast('Návštěva smazána');
                 loadVisitHistory(clientId);
                 loadClient(clientId);
             } catch (err) {
                 toast(err.message, 'error');
             }
-        }));
+            return;
+        }
 
-    // Print receipt
-    container.querySelectorAll('.btn-print-receipt').forEach(btn =>
-        btn.addEventListener('click', async ev => {
-            ev.stopPropagation();
-            await printReceipt(+btn.dataset.id);
-        }));
-}
+        // ── Print receipt ──
+        if (btn.classList.contains('btn-print-receipt')) {
+            await printReceipt(+vid);
+        }
+    });
+})();
 
 async function loadVisitHistory(clientId) {
     const ul = document.getElementById('visit-list');
@@ -551,10 +559,16 @@ async function loadMoreVisits(clientId) {
     while (temp.firstChild) fragment.appendChild(temp.firstChild);
 
     ul.appendChild(fragment);
-    attachVisitActions(ul, clientId);
 
-    // Auto-expand visit after save
+    // Auto-expand visit after save — collapse all, then expand the target
     if (state.expandVisitId != null) {
+        // Collapse all open cards first
+        ul.querySelectorAll('.visit-card.visit-open').forEach(c => {
+            c.classList.remove('visit-open');
+            const b = c.querySelector('.visit-card-body');
+            if (b) b.hidden = true;
+        });
+
         const eid = String(state.expandVisitId);
         let card = ul.querySelector(`.visit-card[data-id="${eid}"]`);
         if (!card) card = ul.querySelector('.visit-card');
@@ -908,19 +922,23 @@ async function copyVisit(visitId) {
 
 document.getElementById('btn-new-visit').addEventListener('click', () => openFormulaEditor(null));
 document.getElementById('btn-save-visit').addEventListener('click', onSaveVisitClick);
-document.getElementById('btn-fo-back').addEventListener('click', closeFormulaOverlay);
+document.getElementById('btn-fo-back').addEventListener('click', tryCloseFormulaOverlay);
+document.getElementById('btn-cancel-visit').addEventListener('click', tryCloseFormulaOverlay);
 
-function renderActionBar() {
+function renderActionBar(isNew = false) {
     const bar = document.getElementById('fo-actions-bar');
     const bowlPresets = codeListCache.bowl.length ? codeListCache.bowl : BOWL_ACTIONS.map(a => ({ name: a }));
     bar.innerHTML = bowlPresets.map(b =>
         `<button type="button" class="action-add-btn" data-action="${e(b.name)}">+ ${e(b.name)}</button>`
-    ).join('') + `<button type="button" class="action-add-btn action-add-custom">+</button>`;
+    ).join('') + `<button type="button" class="action-add-btn action-add-custom">+</button>`
+      + (isNew ? `<button type="button" class="action-add-btn action-last-formula" title="Načíst recepturu z poslední návštěvy">⟲ Poslední</button>` : '');
 
     bar.querySelectorAll('.action-add-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action;
-            if (action) {
+            if (btn.classList.contains('action-last-formula')) {
+                loadLastFormula();
+            } else if (action) {
                 addBowl(null, { label: action });
             } else {
                 modalPrompt('Název sekce:', { placeholder: 'Např. Přeliv, Keratinový zábal…' }).then(label => {
@@ -929,6 +947,23 @@ function renderActionBar() {
             }
         });
     });
+}
+
+async function loadLastFormula() {
+    const clientId = state.activeClientId;
+    if (!clientId) return;
+    try {
+        const visits = await api(`/visits/index/${clientId}?limit=1`);
+        if (!visits.length) { toast('Žádná předchozí návštěva', 'error'); return; }
+        const visit = await api(`/visits/show/${visits[0].id}`);
+        if (!visit?.color_formula) { toast('Poslední návštěva nemá recepturu', 'error'); return; }
+        document.getElementById('fo-bowls').innerHTML = '';
+        renderServiceToggles();
+        fillEditorFromVisit(visit);
+        toast('Receptura načtena z ' + fmtDate(visit.visit_date));
+    } catch (err) {
+        toast(err.message, 'error');
+    }
 }
 
 function openFormulaOverlay() {
@@ -942,6 +977,31 @@ function closeFormulaOverlay() {
     state.editingVisitId = null;
 }
 
+function isFormulaEditorDirty() {
+    const hasBowls = document.querySelectorAll('#fo-bowls .bowl').length > 0;
+    const hasServices = document.querySelectorAll('.fo-toggle input:checked').length > 0;
+    const hasNote = document.getElementById('fo-note').value.trim().length > 0;
+    return hasBowls || hasServices || hasNote;
+}
+
+async function tryCloseFormulaOverlay() {
+    if (isFormulaEditorDirty()) {
+        const ok = await modalConfirm('Máte neuložené změny. Opravdu chcete zavřít editor?', {
+            title: 'Zavřít editor',
+            okText: 'Zavřít',
+            okClass: 'btn btn-danger',
+        });
+        if (!ok) return;
+    }
+    closeFormulaOverlay();
+}
+
+function updateBowlCount() {
+    const n = document.querySelectorAll('#fo-bowls .bowl').length;
+    document.getElementById('fo-bowl-count').textContent = n || '';
+}
+new MutationObserver(updateBowlCount).observe(document.getElementById('fo-bowls'), { childList: true });
+
 async function openFormulaEditor(visitId, copyData = null) {
     state.editingVisitId = visitId;
     state.editingVisitData = null;
@@ -951,21 +1011,30 @@ async function openFormulaEditor(visitId, copyData = null) {
     document.getElementById('fo-note').value = '';
     renderServiceToggles();
 
+    const dateInput = document.getElementById('fo-visit-date');
+    const today = new Date().toISOString().slice(0, 10);
+
     if (visitId) {
         const visit = await api(`/visits/show/${visitId}`).catch(() => null);
         if (visit) {
             state.editingVisitData = visit;
             document.getElementById('fo-profile-sub').textContent = `Úprava návštěvy · ${fmtDate(visit.visit_date)}`;
+            dateInput.value = visit.visit_date;
+            dateInput.hidden = true;
             fillEditorFromVisit(visit);
         }
     } else if (copyData) {
-        document.getElementById('fo-profile-sub').textContent = `Kopie návštěvy z ${fmtDate(copyData.visit_date)} · dnes`;
+        document.getElementById('fo-profile-sub').textContent = 'Kopie návštěvy';
+        dateInput.value = today;
+        dateInput.hidden = false;
         fillEditorFromVisit(copyData);
     } else {
-        document.getElementById('fo-profile-sub').textContent = 'Nová návštěva · dnes';
+        document.getElementById('fo-profile-sub').textContent = 'Nová návštěva';
+        dateInput.value = today;
+        dateInput.hidden = false;
     }
 
-    renderActionBar();
+    renderActionBar(!visitId);
     openFormulaOverlay();
 }
 
@@ -1053,7 +1122,7 @@ function addProductRow(container, bowl, data = {}) {
         <button type="button" class="product-remove" tabindex="-1">×</button>`;
 
     row.querySelector('.product-remove').addEventListener('click', () => { row.remove(); recalcOxidant(bowl); });
-    attachAutocomplete(row.querySelector('.product-name-input'));
+    attachAutocomplete(row.querySelector('.product-name-input'), null, 0);
 
     // Přepočet oxidantu při změně gramáže
     row.querySelector('.product-amount-input').addEventListener('input', () => recalcOxidant(bowl));
@@ -1072,7 +1141,26 @@ function addProductRow(container, bowl, data = {}) {
 
 // ── Klávesové ovládání ────────────────────────────────────────────────────────
 
+// Global keyboard shortcuts
+document.addEventListener('keydown', ev => {
+    if (ev.key === 'k' && (ev.metaKey || ev.ctrlKey)) {
+        ev.preventDefault();
+        const search = document.getElementById('client-search');
+        if (search) { search.focus(); search.select(); }
+    }
+});
+
 document.getElementById('formula-overlay').addEventListener('keydown', ev => {
+    if (ev.key === 'Escape') {
+        ev.preventDefault();
+        tryCloseFormulaOverlay();
+        return;
+    }
+    if (ev.key === 's' && (ev.metaKey || ev.ctrlKey)) {
+        ev.preventDefault();
+        onSaveVisitClick();
+        return;
+    }
     if (ev.key === 'Enter' && ev.shiftKey) {
         ev.preventDefault();
         addBowl();
@@ -1148,7 +1236,7 @@ function recalcOxidant(bowl) {
 
 // ── Autocomplete produktů ─────────────────────────────────────────────────────
 
-function attachAutocomplete(input, categoryFilter = null) {
+function attachAutocomplete(input, categoryFilter = null, retailFilter = null) {
     let dropdown = null;
     let acTimer;
     let acIndex = -1;
@@ -1185,6 +1273,7 @@ function attachAutocomplete(input, categoryFilter = null) {
     async function fetchAC(q) {
         let url = `/products/search?q=${encodeURIComponent(q)}`;
         if (categoryFilter) url += `&cat=${encodeURIComponent(categoryFilter)}`;
+        if (retailFilter !== null) url += `&retail=${retailFilter}`;
         const results = await api(url).catch(() => []);
         if (!results.length) { closeAC(); return; }
         renderAC(results);
@@ -1345,7 +1434,7 @@ async function saveVisit(price = null) {
 
     const payload = {
         client_id:      clientId,
-        visit_date:     existing?.visit_date ?? new Date().toISOString().slice(0, 10),
+        visit_date:     existing?.visit_date ?? document.getElementById('fo-visit-date').value,
         service_name:   existing?.service_name ?? allLabels.join(', '),
         note:           document.getElementById('fo-note').value.trim(),
         price:          price,
@@ -1532,8 +1621,9 @@ billingForm.addEventListener('submit', async ev => {
 
         billingModal.hidden = true;
         toast('Vyúčtováno');
+        state.expandVisitId = +vid;
         loadVisitHistory(clientId);
-        loadClient(clientId);
+        loadClient(clientId, { skipVisits: true });
     } catch (err) {
         toast(err.message, 'error');
     }

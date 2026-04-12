@@ -971,6 +971,16 @@ body {
     color: var(--color-muted);
 }
 
+.fo-visit-date {
+    font-size: 13px;
+    padding: 2px 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--color-text);
+    margin-top: 2px;
+}
+
 /* Section label */
 .fo-section-label {
     font-size: 11px;
@@ -980,13 +990,26 @@ body {
     letter-spacing: .08em;
     margin-bottom: 10px;
 }
+.fo-bowl-count {
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 99px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.fo-bowl-count:empty { display: none; }
 
 /* Action buttons (add bowl) */
 .fo-actions-bar {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 .action-add-btn {
     display: inline-block;
@@ -1010,12 +1033,17 @@ body {
     min-width: 36px;
     text-align: center;
 }
+.action-last-formula {
+    border-style: dashed;
+}
 
 /* ── Service toggles ──────────────────────────────────────────────────────── */
 .fo-toggles {
     display: flex;
     gap: 6px;
-    padding: 8px 24px;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
 }
@@ -1097,6 +1125,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    min-height: 120px;
+}
+.fo-bowls:empty {
+    align-items: center;
+    justify-content: center;
+}
+.fo-bowls:empty::before {
+    content: 'Zatím prázdné — přidejte misku nebo vyberte službu';
+    color: var(--color-muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 32px 16px;
 }
 
 .bowl {
@@ -1323,12 +1363,21 @@ body {
 }
 .fo-note:focus { border-color: var(--color-accent); }
 .fo-note::placeholder { color: var(--color-muted); }
+.fo-footer-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-cancel-visit {
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 500;
+}
 .btn-save-visit {
     width: auto;
     padding: 10px 28px;
     font-size: 13px;
     font-weight: 600;
-    align-self: flex-end;
 }
 
 /* ── Toast ────────────────────────────────────────────────────────────────── */

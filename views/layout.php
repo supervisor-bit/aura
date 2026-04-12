@@ -178,24 +178,26 @@
                 <div class="fo-profile-info">
                     <span class="fo-profile-name" id="fo-client-name"></span>
                     <span class="fo-profile-sub" id="fo-profile-sub">Nová návštěva · dnes</span>
+                    <input type="date" id="fo-visit-date" class="fo-visit-date" title="Datum návštěvy">
                 </div>
             </div>
 
-            <h4 class="fo-section-label">RECEPTURA</h4>
+            <h4 class="fo-section-label">RECEPTURA <span id="fo-bowl-count" class="fo-bowl-count"></span></h4>
+
+            <div class="fo-toggles" id="fo-toggles"></div>
 
             <div class="fo-actions-bar" id="fo-actions-bar"></div>
         </div>
 
-        <div class="fo-toggles" id="fo-toggles"></div>
-
         <div class="fo-scroll-area">
             <div class="fo-shortcuts">
+                <kbd>Ctrl+S</kbd> uložit · 
                 <kbd>Tab</kbd> produkt → gramáž · 
                 <kbd>Enter</kbd> nový produkt · 
                 <kbd>Enter na prázdném</kbd> → oxidant · 
                 <kbd>Shift+Enter</kbd> nová miska · 
-                <kbd>⌘/Ctrl+⌫</kbd> smazat řádek · 
-                <kbd>⌘/Ctrl+Del</kbd> smazat misku
+                <kbd>Ctrl+⌫</kbd> smazat řádek · 
+                <kbd>Ctrl+Del</kbd> smazat misku
             </div>
 
             <div id="fo-bowls" class="fo-bowls"></div>
@@ -203,7 +205,10 @@
 
         <div class="fo-footer">
             <textarea id="fo-note" class="fo-note" placeholder="Poznámka k návštěvě…" rows="2"></textarea>
-            <button id="btn-save-visit" class="btn btn-primary btn-save-visit">Uložit návštěvu</button>
+            <div class="fo-footer-buttons">
+                <button id="btn-cancel-visit" class="btn btn-outline btn-cancel-visit">Zrušit</button>
+                <button id="btn-save-visit" class="btn btn-primary btn-save-visit">Uložit návštěvu</button>
+            </div>
         </div>
 
     </div><!-- /formula-overlay -->

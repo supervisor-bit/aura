@@ -1,7 +1,11 @@
 -- AURA — Kartotéka klientů pro kadeřnický salon
--- Produkční schéma pro Synology MariaDB 10
+-- MySQL 8+ schema
 
 SET NAMES utf8mb4;
+SET time_zone = '+01:00';
+
+CREATE DATABASE IF NOT EXISTS aura_v2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE aura_v2;
 
 -- ─── Klienti ───────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS `clients` (
@@ -17,6 +21,22 @@ CREATE TABLE IF NOT EXISTS `clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ─── Návštěvy ──────────────────────────────────────────────────────────────────
+-- color_formula JSON struktura:
+-- {
+--   "actions": ["Odrost","Toner"],
+--   "bowls": [
+--     {
+--       "label": "Miska 1",
+--       "color": "#e53935",
+--       "products": [
+--         {"name": "Igora Royal 6-0", "amount": 60},
+--         {"name": "Igora Royal 0-11", "amount": 10}
+--       ],
+--       "oxidant": {"name": "Igora Royal Oil Developer 6%", "ratio": "1:1", "amount": 70}
+--     }
+--   ],
+--   "note": "Nechat působit 35 min"
+-- }
 CREATE TABLE IF NOT EXISTS `client_visits` (
     `id`             INT UNSIGNED     NOT NULL AUTO_INCREMENT,
     `client_id`      INT UNSIGNED     NOT NULL,
@@ -37,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `client_visits` (
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ─── Katalog produktů ──────────────────────────────────────────────────────────
+-- ─── Katalog produktů / ceník ──────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS `price_list_items` (
     `id`            INT UNSIGNED     NOT NULL AUTO_INCREMENT,
     `title`         VARCHAR(200)     NOT NULL,
@@ -136,8 +156,6 @@ CREATE TABLE IF NOT EXISTS `app_settings` (
     `setting_value` TEXT         DEFAULT NULL,
     PRIMARY KEY (`setting_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Při prvním spuštění se zobrazí formulář pro vytvoření přihlašovacích údajů
 
 -- ─── Výchozí data — Materiály z barvy_loreal.csv (339 položek) ─────────────────
 INSERT INTO `price_list_items` (`title`, `category`, `series`, `volume`, `default_price`, `is_active`, `is_retail`) VALUES
