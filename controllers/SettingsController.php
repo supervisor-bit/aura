@@ -134,4 +134,47 @@ class SettingsController
         echo $dump;
         exit;
     }
+
+    /** GET /settings/data-stats — přehled počtu záznamů */
+    public function dataStats(?int $id = null, array $body = []): void
+    {
+        $pdo = db();
+        $tables = [
+            ['key' => 'clients',        'label' => 'Klienti'],
+            ['key' => 'client_visits',   'label' => 'Návštěvy'],
+            ['key' => 'client_notes',    'label' => 'Poznámky'],
+            ['key' => 'tags',            'label' => 'Štítky'],
+            ['key' => 'retail_sales',    'label' => 'Prodeje'],
+            ['key' => 'daily_closings',  'label' => 'Denní uzávěrky'],
+            ['key' => 'code_lists',      'label' => 'Číselníky'],
+            ['key' => 'price_list_items','label' => 'Produkty'],
+        ];
+        $stats = [];
+        foreach ($tables as $t) {
+            $cnt = (int) $pdo->query("SELECT COUNT(*) FROM `{$t['key']}`")->fetchColumn();
+            $stats[] = ['key' => $t['key'], 'label' => $t['label'], 'count' => $cnt];
+        }
+        json_response($stats);
+    }
+
+    /** POST /settings/purge-data — vymazat provozní data (klienti, návštěvy, poznámky, prodeje, uzávěrky) */
+    public function purgeData(?int $id = null, array $body = []): void
+    {
+        $confirm = $body['confirm'] ?? '';
+        if ($confirm !== 'SMAZAT') {
+            json_response(['error' => 'Potvrzení nesouhlasí'], 400);
+        }
+
+        $pdo = db();
+        $pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
+        $pdo->exec('TRUNCATE TABLE client_notes');
+        $pdo->exec('TRUNCATE TABLE client_tags');
+        $pdo->exec('TRUNCATE TABLE client_visits');
+        $pdo->exec('TRUNCATE TABLE retail_sales');
+        $pdo->exec('TRUNCATE TABLE daily_closings');
+        $pdo->exec('TRUNCATE TABLE clients');
+        $pdo->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+        json_response(['message' => 'Provozní data byla vymazána']);
+    }
 }

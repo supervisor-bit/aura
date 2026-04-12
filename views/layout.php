@@ -496,10 +496,11 @@
     </div>
     <!-- Hlavní záložky nastavení -->
     <div class="settings-main-tabs">
-        <button class="settings-main-tab active" data-settings-tab="codelists">Číselníky</button>
+        <button class="settings-main-tab active" data-settings-tab="codelists">Číselнíky</button>
         <button class="settings-main-tab" data-settings-tab="salon">Salon</button>
         <button class="settings-main-tab" data-settings-tab="auth">Přihlášení</button>
         <button class="settings-main-tab" data-settings-tab="backup">Záloha DB</button>
+        <button class="settings-main-tab" data-settings-tab="data">Data</button>
         <button class="settings-main-tab" data-settings-tab="about">O aplikaci</button>
     </div>
 
@@ -631,6 +632,27 @@
                     </button>
                 </div>
                 <p class="settings-hint">Doporučujeme provádět zálohu pravidelně, ideálně týdně.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: Data ═══ -->
+    <div id="settings-panel-data" class="settings-panel" hidden>
+        <div class="settings-content">
+            <div class="settings-section">
+                <h3>Přehled dat</h3>
+                <p class="settings-section-desc">Počty záznamů v jednotlivých tabulkách.</p>
+                <div class="data-stats-grid" id="data-stats-grid"></div>
+            </div>
+            <div class="settings-section settings-section-danger">
+                <div class="settings-section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </div>
+                <h3>Vymazat provozní data</h3>
+                <p class="settings-section-desc">Smaže všechny klienty, návštěvy, poznámky, prodeje a denní uzávěrky. <strong>Číselníky, produkty a nastavení zůstanou zachovány.</strong></p>
+                <div class="settings-form-actions">
+                    <button type="button" id="btn-purge-data" class="btn btn-danger">Vymazat data</button>
+                </div>
             </div>
         </div>
     </div>

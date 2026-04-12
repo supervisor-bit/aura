@@ -1723,6 +1723,33 @@ kbd {
     color: var(--color-muted);
 }
 
+/* ── Settings: Data overview ───────────────────────────────────────────────── */
+.data-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+.data-stat-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.data-stat-value { font-size: 20px; font-weight: 700; color: var(--color-accent); }
+.data-stat-label { font-size: 11px; color: var(--color-muted); text-transform: uppercase; letter-spacing: .04em; }
+.settings-section-danger {
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 20px;
+}
+.settings-section-danger h3 { color: var(--color-danger); }
+
 /* ── Stats View ───────────────────────────────────────────────────────────── */
 .stats-view {
     flex: 1;

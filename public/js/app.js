@@ -1691,6 +1691,45 @@ billingForm.addEventListener('submit', async ev => {
     }
 });
 
+// ── Settings: Data overview ───────────────────────────────────────────────────
+
+async function loadDataStats() {
+    try {
+        const stats = await api('/settings/data-stats');
+        const grid = document.getElementById('data-stats-grid');
+        grid.innerHTML = stats.map(t =>
+            `<div class="data-stat-item">
+                <span class="data-stat-value">${t.count}</span>
+                <span class="data-stat-label">${e(t.label)}</span>
+            </div>`
+        ).join('');
+    } catch (err) {
+        toast(err.message, 'error');
+    }
+}
+
+document.getElementById('btn-purge-data').addEventListener('click', async () => {
+    const ok = await modalConfirm(
+        'Tato akce nenávratně smaže všechny klienty, návštěvy, poznámky, prodeje a denní uzávěrky. Číselníky a ceník zůstanou.<br><br>Pro potvrzení napište <strong>SMAZAT</strong>.',
+        { title: 'Vymazat provozní data', okText: 'Vymazat vše', okClass: 'btn btn-danger', html: true }
+    );
+    if (!ok) return;
+
+    const confirm = prompt('Napište SMAZAT pro potvrzení:');
+    if (confirm !== 'SMAZAT') { toast('Smazání zrušeno'); return; }
+
+    try {
+        const res = await api('/settings/purge-data', {
+            method: 'POST',
+            body: JSON.stringify({ confirm: 'SMAZAT' }),
+        });
+        toast(res.message);
+        loadDataStats();
+    } catch (err) {
+        toast(err.message, 'error');
+    }
+});
+
 // ── Statistiky ────────────────────────────────────────────────────────────────
 
 async function loadStats() {
@@ -1913,6 +1952,7 @@ document.querySelectorAll('.settings-main-tab').forEach(btn => {
 
         if (activeSettingsTab === 'auth') loadAuthSettings();
         if (activeSettingsTab === 'salon') loadSalonSettings();
+        if (activeSettingsTab === 'data') loadDataStats();
     });
 });
 

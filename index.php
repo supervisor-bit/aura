@@ -104,6 +104,8 @@ $routes = [
     'GET:settings:get-username'     => ['SettingsController', 'getUsername'],
     'GET:settings:get-salon'        => ['SettingsController', 'getSalon'],
     'POST:settings:save-salon'      => ['SettingsController', 'saveSalon'],
+    'GET:settings:data-stats'       => ['SettingsController', 'dataStats'],
+    'POST:settings:purge-data'      => ['SettingsController', 'purgeData'],
 
     // Štítky
     'GET:tags:index'     => ['TagController', 'index'],
