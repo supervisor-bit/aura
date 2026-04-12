@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteBase /aura/
+RewriteBase /
 
 # Statické soubory servírovat přímo
 RewriteCond %{REQUEST_FILENAME} -f [OR]

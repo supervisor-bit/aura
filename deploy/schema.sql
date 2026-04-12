@@ -4,8 +4,8 @@
 SET NAMES utf8mb4;
 SET time_zone = '+01:00';
 
-CREATE DATABASE IF NOT EXISTS aura_v2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE aura_v2;
+CREATE DATABASE IF NOT EXISTS aura CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE aura;
 
 -- ─── Klienti ───────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS `clients` (
@@ -156,6 +156,45 @@ CREATE TABLE IF NOT EXISTS `app_settings` (
     `setting_value` TEXT         DEFAULT NULL,
     PRIMARY KEY (`setting_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ─── Výchozí data — Číselníky ───────────────────────────────────────────────────
+INSERT INTO `code_lists` (`type`, `name`, `icon`, `sort_order`) VALUES
+('service', 'Metal Detox', '🛡️', 1),
+('service', 'Stříhání', '✂️', 2),
+('service', 'Foukání', '💨', 3),
+('service', 'Žehlení', '▰', 4),
+('service', 'Kulmování', '〰️', 5),
+('ratio', '1:1', NULL, 1),
+('ratio', '1:1.5', NULL, 2),
+('ratio', '1:2', NULL, 3),
+('ratio', '2:1', NULL, 4),
+('bowl', 'Odrost', NULL, 1),
+('bowl', 'Délky', NULL, 2),
+('bowl', 'Melír', NULL, 3),
+('bowl', 'Toner', NULL, 4),
+('bowl', 'Odbarvení', NULL, 5),
+('bowl', 'Balayage', NULL, 6),
+('material', 'Inoa', NULL, 0),
+('material', 'Inoa Boosters', NULL, 1),
+('material', 'Majirel', NULL, 2),
+('material', 'Majirel Boosters', NULL, 3),
+('material', 'Majirel Cool Cover', NULL, 4),
+('material', 'Majirel High Lift', NULL, 5),
+('material', 'DIALight', NULL, 6),
+('material', 'DIALight Boosters', NULL, 7),
+('material', 'DIAcolor', NULL, 8),
+('material', 'Blond Studio', NULL, 9),
+('material', 'Oxidant', NULL, 10),
+('material', 'Preparace', NULL, 11),
+('material', 'Ostatní', NULL, 12);
+
+-- ─── Výchozí data — Štítky ─────────────────────────────────────────────────────
+INSERT INTO `tags` (`name`, `color`, `sort_order`) VALUES
+('Blond specialistka', '#f59e0b', 1),
+('Stálý klient', '#8b5cf6', 2),
+('Alergie', '#ef4444', 3),
+('VIP', '#ec4899', 4),
+('Nový klient', '#06b6d4', 5);
 
 -- ─── Výchozí data — Materiály z barvy_loreal.csv (339 položek) ─────────────────
 INSERT INTO `price_list_items` (`title`, `category`, `series`, `volume`, `default_price`, `is_active`, `is_retail`) VALUES

@@ -5,7 +5,7 @@ declare(strict_types=1);
 define('APP_ENV', 'production');
 define('APP_NAME', 'AURA');
 define('APP_ROOT', __DIR__);
-define('BASE_URL', '/aura/');     // podadresář na Synology Web Station
+define('BASE_URL', '/');          // app.martvi.cz — virtual host
 
 // ─── Chybové hlášení ──────────────────────────────────────────────────────────
 ini_set('display_errors', '0');
@@ -13,12 +13,12 @@ error_reporting(0);
 
 // ─── Databáze ─────────────────────────────────────────────────────────────────
 // Synology MariaDB 10 — socket /run/mysqld/mysqld10.sock
-// Pokud nefunguje socket, zkus TCP: změň DSN na host=127.0.0.1;port=3307
+// Fallback na TCP: host=127.0.0.1;port=3306
 define('DB_HOST', '127.0.0.1');
-define('DB_PORT', 3307);          // MariaDB 10 na Synology defaultně port 3307
+define('DB_PORT', 3306);          // MariaDB 10 na Synology
 define('DB_NAME', 'aura');
-define('DB_USER', 'aura');        // ← změň na svého DB uživatele
-define('DB_PASS', '');            // ← změň na heslo DB uživatele
+define('DB_USER', 'root');
+define('DB_PASS', 'Mates_19760216');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_SOCKET', '/run/mysqld/mysqld10.sock');
 

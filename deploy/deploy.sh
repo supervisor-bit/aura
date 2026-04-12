@@ -9,7 +9,8 @@
 #
 # Před použitím --upload nastav:
 SYNOLOGY_HOST="192.168.1.61"    # IP nebo hostname NAS (lokální síť)
-SYNOLOGY_USER="admin"         # SSH uživatel
+SYNOLOGY_USER="hairdresser"   # SSH uživatel
+SYNOLOGY_PORT=33              # SSH port
 SYNOLOGY_PATH="/volume1/web/aura"
 # ═══════════════════════════════════════════════════════════════
 
@@ -69,14 +70,12 @@ if [[ "$1" == "--upload" ]]; then
     fi
     echo ""
     echo "📦 Nahrávám na $SYNOLOGY_HOST:$SYNOLOGY_PATH ..."
-    scp "$ARCHIVE" "$SYNOLOGY_USER@$SYNOLOGY_HOST:/tmp/aura-deploy.tar.gz"
-    ssh "$SYNOLOGY_USER@$SYNOLOGY_HOST" "
+    scp -O -P $SYNOLOGY_PORT "$ARCHIVE" "$SYNOLOGY_USER@$SYNOLOGY_HOST:/tmp/aura-deploy.tar.gz"
+    ssh -p $SYNOLOGY_PORT "$SYNOLOGY_USER@$SYNOLOGY_HOST" "
         cd /tmp &&
-        tar -xzf aura-deploy.tar.gz &&
-        sudo mkdir -p $SYNOLOGY_PATH &&
-        sudo cp -r aura/* $SYNOLOGY_PATH/ &&
-        sudo chown -R http:http $SYNOLOGY_PATH &&
-        sudo chmod -R 755 $SYNOLOGY_PATH &&
+        tar -xzf aura-deploy.tar.gz 2>/dev/null &&
+        mkdir -p $SYNOLOGY_PATH &&
+        cp -r aura/* aura/.htaccess $SYNOLOGY_PATH/ &&
         rm -rf /tmp/aura /tmp/aura-deploy.tar.gz
     "
     echo "✅ Nasazeno na $SYNOLOGY_HOST:$SYNOLOGY_PATH"
