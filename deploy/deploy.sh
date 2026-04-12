@@ -8,7 +8,7 @@
 #   ./deploy.sh --upload      — vytvoří archiv a nahraje přes SCP
 #
 # Před použitím --upload nastav:
-SYNOLOGY_HOST=""              # IP nebo hostname NAS (např. 192.168.1.100)
+SYNOLOGY_HOST="192.168.1.61"    # IP nebo hostname NAS (lokální síť)
 SYNOLOGY_USER="admin"         # SSH uživatel
 SYNOLOGY_PATH="/volume1/web/aura"
 # ═══════════════════════════════════════════════════════════════

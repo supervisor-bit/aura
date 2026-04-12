@@ -759,7 +759,7 @@
 <script src="<?= BASE_URL ?>public/js/app.js?v=<?= time() ?>"></script>
 <script>
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('<?= BASE_URL ?>sw.js').catch(() => {});
 }
 </script>
 </body>
