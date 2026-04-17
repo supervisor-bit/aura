@@ -104,7 +104,7 @@ class VisitController
                 $total = 0;
                 foreach ($items as &$item) {
                     $qty = max(1, (int)($item['qty'] ?? 1));
-                    $price = (float)($item['unit_price'] ?? 0);
+                    $price = max(0.0, (float)($item['unit_price'] ?? 0));
                     $item['qty'] = $qty;
                     $item['unit_price'] = $price;
                     $total += $qty * $price;

@@ -1444,9 +1444,14 @@ async function saveVisit(price = null) {
     const allLabels = [...serviceLabels, ...actions].filter(Boolean);
     const existing = state.editingVisitData;
 
+    const visitDate = existing?.visit_date ?? document.getElementById('fo-visit-date').value;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(visitDate)) {
+        toast('Neplatný formát data', 'error'); return;
+    }
+
     const payload = {
         client_id:      clientId,
-        visit_date:     existing?.visit_date ?? document.getElementById('fo-visit-date').value,
+        visit_date:     visitDate,
         service_name:   existing?.service_name ?? allLabels.join(', '),
         note:           document.getElementById('fo-note').value.trim(),
         price:          price,
@@ -1872,7 +1877,7 @@ async function loadDashboard() {
             return `<li class="dash-recent-item dash-retention-item ${level}" data-client-id="${r.id}" style="cursor:pointer">
                 <span class="dash-recent-name">${e(r.full_name)}</span>
                 <span class="dash-retention-days">${days} dní</span>
-                <span class="dash-recent-date">${r.last_visit ? new Date(r.last_visit).toLocaleDateString('cs-CZ') : 'nikdy'}</span>
+                <span class="dash-recent-date">${r.last_visit && !isNaN(new Date(r.last_visit)) ? new Date(r.last_visit).toLocaleDateString('cs-CZ') : 'nikdy'}</span>
             </li>`;
         }).join('');
         retUl.querySelectorAll('.dash-retention-item').forEach(li => {
