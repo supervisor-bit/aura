@@ -92,16 +92,26 @@ class StatsController
             "SELECT id, title FROM price_list_items WHERE is_retail = 0 AND is_active = 1"
         )->fetchAll();
 
-        // Find last usage for all products
-        $allVisits = db()->query(
-            "SELECT color_formula, visit_date FROM client_visits WHERE color_formula IS NOT NULL ORDER BY visit_date DESC"
-        )->fetchAll();
+        // Build last-usage map from already-fetched visits when period covers all,
+        // otherwise do a targeted query limited to visits with formulas
+        if ($period === 'all') {
+            $sourceVisits = $visits;
+        } else {
+            $sourceVisits = db()->query(
+                "SELECT color_formula, visit_date FROM client_visits
+                  WHERE color_formula IS NOT NULL
+                  ORDER BY visit_date DESC"
+            )->fetchAll();
+        }
 
         $lastUsage = [];
-        foreach ($allVisits as $av) {
-            $f = json_decode($av['color_formula'], true);
-            if (!$f || empty($f['bowls'])) continue;
-            foreach ($f['bowls'] as $bowl) {
+        foreach ($sourceVisits as $av) {
+            $formula = $av['color_formula'];
+            if (is_string($formula)) {
+                $formula = json_decode($formula, true);
+            }
+            if (!$formula || empty($formula['bowls'])) continue;
+            foreach ($formula['bowls'] as $bowl) {
                 foreach ($bowl['products'] ?? [] as $p) {
                     $n = trim($p['name'] ?? '');
                     if ($n && !isset($lastUsage[$n])) $lastUsage[$n] = $av['visit_date'];

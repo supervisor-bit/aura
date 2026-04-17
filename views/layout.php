@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AURA">
+    <meta name="csrf-token" content="<?= e($_SESSION['csrf_token'] ?? '') ?>">
     <link rel="manifest" href="<?= BASE_URL ?>public/manifest.json">
     <link rel="apple-touch-icon" href="<?= BASE_URL ?>public/icons/icon-192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>public/icons/favicon-32.png">

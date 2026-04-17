@@ -82,6 +82,50 @@ class VisitController
 
     // ── Privátní ──────────────────────────────────────────────────────────────
 
+    /** POST /visits/billing/{id} — atomic billing: update visit + replace sale */
+    public function billing(?int $id, array $body): void
+    {
+        if (!$id) {
+            json_response(['error' => 'Chybí ID'], 400);
+        }
+        $clientId = (int)($body['client_id'] ?? 0);
+        $amount   = isset($body['billing_amount']) ? (float)$body['billing_amount'] : null;
+        $change   = isset($body['billing_change']) ? (float)$body['billing_change'] : null;
+        $items    = $body['items'] ?? [];
+
+        $db = db();
+        $db->beginTransaction();
+        try {
+            Visit::updateBilling($id, 'paid', $amount, $change);
+
+            Sale::deleteByVisit($id);
+
+            if (!empty($items)) {
+                $total = 0;
+                foreach ($items as &$item) {
+                    $qty = max(1, (int)($item['qty'] ?? 1));
+                    $price = (float)($item['unit_price'] ?? 0);
+                    $item['qty'] = $qty;
+                    $item['unit_price'] = $price;
+                    $total += $qty * $price;
+                }
+                Sale::create([
+                    'client_id' => $clientId ?: null,
+                    'visit_id'  => $id,
+                    'items'     => $items,
+                    'total'     => $total,
+                    'note'      => null,
+                ]);
+            }
+
+            $db->commit();
+            json_response(['message' => 'Vyúčtováno']);
+        } catch (\Throwable $e) {
+            $db->rollBack();
+            json_response(['error' => 'Chyba při ukládání: ' . $e->getMessage()], 500);
+        }
+    }
+
     private function validate(array $data): array
     {
         $clientId = (int)($data['client_id'] ?? 0);

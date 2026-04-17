@@ -38,8 +38,9 @@ const state = {
 // ── Pomocné funkce ────────────────────────────────────────────────────────────
 
 async function api(path, opts = {}) {
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
     const res = await fetch(path, {
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf },
         ...opts,
     });
     const data = await res.json().catch(() => ({}));
@@ -1660,30 +1661,16 @@ billingForm.addEventListener('submit', async ev => {
     });
 
     try {
-        // Save billing
-        await api(`/visits/update/${vid}`, {
+        // Atomic billing — single transaction on server
+        await api(`/visits/billing/${vid}`, {
             method: 'POST',
             body: JSON.stringify({
                 client_id: clientId,
-                billing_status: 'paid',
                 billing_amount: amount,
                 billing_change: change,
+                items: productItems,
             }),
         });
-
-        // Delete old sale for this visit, then create new one if products
-        await api(`/sales/delete-by-visit/${vid}`, { method: 'POST' }).catch(() => {});
-        if (productItems.length) {
-            await api('/sales/store', {
-                method: 'POST',
-                body: JSON.stringify({
-                    client_id: clientId,
-                    visit_id: +vid,
-                    items: productItems,
-                    note: null,
-                }),
-            });
-        }
 
         billingModal.hidden = true;
         toast('Vyúčtováno');
@@ -2878,7 +2865,7 @@ async function printReceipt(visitId) {
         sales.forEach(s => {
             const items = typeof s.items === 'string' ? JSON.parse(s.items) : (s.items || []);
             items.forEach(item => {
-                const price = Number(item.price) || 0;
+                const price = Number(item.unit_price) || 0;
                 const qty = Number(item.qty) || 1;
                 productsTotal += price * qty;
                 productLines.push({ name: item.title || item.name || '?', qty, price: price * qty });
@@ -2947,7 +2934,7 @@ body{font-family:'Courier New',monospace;font-size:12px;padding:16px;max-width:2
     modal.addEventListener('click', ev => { if (ev.target === modal) close(); }, { once: true });
 }
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+const esc = e;
 
 /** Convert hex color to a light background version */
 function hexBg(hex) {

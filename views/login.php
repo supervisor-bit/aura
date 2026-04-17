@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= e($_SESSION['csrf_token'] ?? '') ?>">
     <title><?= APP_NAME ?> — <?= !empty($needsSetup) ? 'Nastavení' : 'Přihlášení' ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
@@ -273,7 +274,10 @@ document.getElementById('login-form').addEventListener('submit', async (ev) => {
         const endpoint = isSetup ? '/auth/setup' : '/auth/login';
         const res = await fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
             body: JSON.stringify({
                 username: document.getElementById('login-user').value,
                 password: password

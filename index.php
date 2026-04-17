@@ -4,7 +4,17 @@ declare(strict_types=1);
 require_once __DIR__ . '/config.php';
 
 // ─── Session ──────────────────────────────────────────────────────────────────
+session_set_cookie_params([
+    'httponly'  => true,
+    'samesite'  => 'Lax',
+    'secure'    => ($_SERVER['HTTPS'] ?? '') === 'on',
+]);
 session_start();
+
+// ─── CSRF token ───────────────────────────────────────────────────────────────
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 // ─── Autoload (bez Composeru) ─────────────────────────────────────────────────
 spl_autoload_register(function (string $class): void {
@@ -63,6 +73,7 @@ $routes = [
     'GET:visits:show'      => ['VisitController',   'show'],
     'POST:visits:update'   => ['VisitController',   'update'],
     'POST:visits:delete'   => ['VisitController',   'delete'],
+    'POST:visits:billing'  => ['VisitController',   'billing'],
 
     // Produkty / ceník
     'GET:products:search'   => ['ProductController', 'search'],
@@ -126,6 +137,14 @@ $routes = [
 
 // ─── Dispatch ─────────────────────────────────────────────────────────────────
 $routeKey = "{$method}:{$resource}:{$action}";
+
+// ─── CSRF ochrana pro POST ────────────────────────────────────────────────────
+if ($method === 'POST') {
+    $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+        json_response(['error' => 'Neplatný CSRF token'], 403);
+    }
+}
 
 // ─── Auth routes (veřejné) ────────────────────────────────────────────────────
 

@@ -27,16 +27,45 @@ class ClientController
         if (!$id) {
             json_response(['error' => 'Chybí ID'], 400);
         }
-        $client = Client::find($id);
+        $db = db();
+        $stmt = $db->prepare(
+            "SELECT c.*,
+                    (SELECT COUNT(*) FROM client_visits WHERE client_id = c.id) AS visit_count,
+                    (SELECT visit_date FROM client_visits WHERE client_id = c.id ORDER BY visit_date DESC LIMIT 1) AS last_visit,
+                    (SELECT COALESCE(SUM(price), 0) FROM client_visits WHERE client_id = c.id) AS total_spent,
+                    (SELECT COALESCE(SUM(total), 0) FROM retail_sales WHERE client_id = c.id) AS total_retail,
+                    (SELECT color_formula FROM client_visits WHERE client_id = c.id AND color_formula IS NOT NULL ORDER BY visit_date DESC, id DESC LIMIT 1) AS _last_formula
+               FROM clients c
+              WHERE c.id = :id
+              LIMIT 1"
+        );
+        $stmt->execute([':id' => $id]);
+        $client = $stmt->fetch();
         if (!$client) {
             json_response(['error' => 'Klient nenalezen'], 404);
         }
-        $client['visit_count']      = Client::visitCount($id);
-        $client['last_visit']       = Client::lastVisitDate($id);
-        $client['total_spent']      = Client::totalSpent($id);
-        $client['total_retail']     = Client::totalRetailSpent($id);
-        $client['formula_summary']  = Client::formulaSummary($id);
-        $client['tags']             = Tag::forClient($id);
+
+        // Parse formula summary from last formula JSON
+        $formulaJson = $client['_last_formula'] ?? null;
+        unset($client['_last_formula']);
+        $client['formula_summary'] = null;
+        if ($formulaJson) {
+            $data = json_decode($formulaJson, true);
+            if ($data && !empty($data['bowls'])) {
+                $parts = [];
+                foreach ($data['bowls'] as $bowl) {
+                    foreach ($bowl['products'] ?? [] as $prod) {
+                        $name = $prod['name'] ?? '';
+                        if (preg_match('/(\d[\d.\-\/]+)/', $name, $m)) {
+                            $parts[] = $m[1];
+                        }
+                    }
+                }
+                $client['formula_summary'] = $parts ? implode(' + ', $parts) : null;
+            }
+        }
+
+        $client['tags'] = Tag::forClient($id);
         json_response($client);
     }
 
