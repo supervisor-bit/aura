@@ -255,12 +255,12 @@ async function loadClient(id, { skipVisits = false } = {}) {
     // Ulož pro editaci
     document.getElementById('btn-edit-client').dataset.client = JSON.stringify(client);
 
-    // Reset filter
-    document.querySelectorAll('.vf-pill').forEach((p, i) => p.classList.toggle('active', i === 0));
-    document.getElementById('vf-search').value = '';
-
-    // Načti historii
-    if (!skipVisits) loadVisitHistory(id);
+    // Reset filter + načti historii (pouze když se nemá přeskočit)
+    if (!skipVisits) {
+        document.querySelectorAll('.vf-pill').forEach((p, i) => p.classList.toggle('active', i === 0));
+        document.getElementById('vf-search').value = '';
+        loadVisitHistory(id);
+    }
 }
 
 // ── Formulář klienta (modal) ──────────────────────────────────────────────────
@@ -532,6 +532,8 @@ function renderVisitCard(v) {
     });
 })();
 
+let _visitReqId = 0;
+
 async function loadVisitHistory(clientId) {
     const ul = document.getElementById('visit-list');
     ul.innerHTML = '';
@@ -540,6 +542,7 @@ async function loadVisitHistory(clientId) {
 }
 
 async function loadMoreVisits(clientId) {
+    const reqId = ++_visitReqId;
     const ul = document.getElementById('visit-list');
     const offset = state.visitOffset || 0;
     // Build filter params
@@ -547,6 +550,7 @@ async function loadMoreVisits(clientId) {
     let url = `/visits/index/${clientId}?limit=${VISITS_PER_PAGE}&offset=${offset}`;
     if (activeMonths) url += `&months=${activeMonths}`;
     const visits = await api(url).catch(() => []);
+    if (reqId !== _visitReqId) return; // stale response, ignore
 
     // Client-side date text filter
     const dateQuery = (document.getElementById('vf-search').value || '').trim().toLowerCase();
