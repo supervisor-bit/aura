@@ -1966,9 +1966,10 @@ document.getElementById('auth-settings-form').addEventListener('submit', async e
     msgEl.className = 'settings-msg';
 
     try {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
         const res = await fetch('/settings/change-password', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
             body: JSON.stringify({
                 username,
                 current_password: currentPass,
@@ -2855,21 +2856,20 @@ async function printReceipt(visitId) {
     const visit = await api(`/visits/show/${visitId}`).catch(() => null);
     if (!visit) return toast('Nepodařilo se načíst návštěvu', 'error');
 
-    const sales = await api(`/sales/for-visit/${visitId}`).catch(() => []);
+    const sale = await api(`/sales/for-visit/${visitId}`).catch(() => ({ items: [] }));
     const salon = await getSalonInfo();
 
     const serviceTotal = Number(visit.price) || 0;
     let productsTotal = 0;
     const productLines = [];
-    if (sales && sales.length) {
-        sales.forEach(s => {
-            const items = typeof s.items === 'string' ? JSON.parse(s.items) : (s.items || []);
-            items.forEach(item => {
-                const price = Number(item.unit_price) || 0;
-                const qty = Number(item.qty) || 1;
-                productsTotal += price * qty;
-                productLines.push({ name: item.title || item.name || '?', qty, price: price * qty });
-            });
+    const saleItems = sale?.items || [];
+    if (saleItems.length) {
+        const items = typeof saleItems === 'string' ? (() => { try { return JSON.parse(saleItems); } catch { return []; } })() : saleItems;
+        items.forEach(item => {
+            const price = Number(item.unit_price) || 0;
+            const qty = Number(item.qty) || 1;
+            productsTotal += price * qty;
+            productLines.push({ name: item.title || item.name || '?', qty, price: price * qty });
         });
     }
     const total = serviceTotal + productsTotal;
@@ -3089,9 +3089,10 @@ document.getElementById('salon-settings-form').addEventListener('submit', async 
     }
 
     try {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
         const res = await fetch('/settings/save-salon', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
             body: JSON.stringify({
                 salon_name: document.getElementById('salon-name').value.trim(),
                 salon_address: document.getElementById('salon-address').value.trim(),
