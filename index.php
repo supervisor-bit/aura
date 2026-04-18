@@ -188,10 +188,26 @@ if ($routeKey === 'POST:auth:login') {
     }
 }
 if ($routeKey === 'POST:auth:logout') {
+    // Vymazat obsah session
+    $_SESSION = [];
+    
+    // Smazat session cookie
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params['path'],
+            $params['domain'],
+            $params['secure'],
+            $params['httponly']
+        );
+    }
+    
+    // Zničit session na serveru
     session_destroy();
-    // Start a fresh session so the login page gets a valid CSRF token
-    session_start();
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    
     json_response(['message' => 'Odhlášení úspěšné']);
 }
 if ($routeKey === 'GET:auth:check') {

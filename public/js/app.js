@@ -715,13 +715,25 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
         okClass: 'btn btn-danger'
     });
     if (!confirmed) return;
-    await api('/auth/logout', { method: 'POST' });
-    // Bypass service worker cache
+    
+    try {
+        await api('/auth/logout', { method: 'POST' });
+    } catch (e) {
+        console.warn('Logout API error:', e);
+    }
+    
+    // Vymazat cache pro offline-first PWA
     if ('caches' in window) {
         const keys = await caches.keys();
         await Promise.all(keys.map(k => caches.delete(k)));
     }
-    window.location.replace('/');
+    
+    // Vymazat localStorage a sessionStorage
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Vrátit se na login stránku
+    window.location.href = '/?logout=true';
 });
 
 function openSaleModal(sale, clientId) {
