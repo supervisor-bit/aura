@@ -715,7 +715,7 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
         okClass: 'btn btn-danger'
     });
     if (!confirmed) return;
-    await fetch('/auth/logout', { method: 'POST' });
+    await api('/auth/logout', { method: 'POST' });
     // Bypass service worker cache
     if ('caches' in window) {
         const keys = await caches.keys();

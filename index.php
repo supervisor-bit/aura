@@ -188,6 +188,9 @@ if ($routeKey === 'POST:auth:login') {
 }
 if ($routeKey === 'POST:auth:logout') {
     session_destroy();
+    // Start a fresh session so the login page gets a valid CSRF token
+    session_start();
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     json_response(['message' => 'Odhlášení úspěšné']);
 }
 if ($routeKey === 'GET:auth:check') {
