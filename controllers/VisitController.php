@@ -134,7 +134,7 @@ class VisitController
         // 1. Všechny návštěvy dnes s recepturou
         $stmt = db()->prepare(
             "SELECT v.id, v.visit_date, v.service_name, v.color_formula,
-                    c.first_name, c.last_name
+                    c.full_name AS client_name
                FROM client_visits v
                JOIN clients c ON c.id = v.client_id
               WHERE v.visit_date = :today
