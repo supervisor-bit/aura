@@ -126,6 +126,76 @@ class VisitController
         }
     }
 
+    /** GET /visits/export — spotřebované materiály + retail prodeje za dnešní den */
+    public function export(?int $id, array $body): void
+    {
+        $today = date('Y-m-d');
+
+        // 1. Všechny návštěvy dnes s recepturou
+        $stmt = db()->prepare(
+            "SELECT v.id, v.visit_date, v.service_name, v.color_formula,
+                    c.first_name, c.last_name
+               FROM client_visits v
+               JOIN clients c ON c.id = v.client_id
+              WHERE v.visit_date = :today
+              ORDER BY v.id"
+        );
+        $stmt->execute([':today' => $today]);
+        $visits = $stmt->fetchAll();
+
+        // 2. Extrahovat materiály z color_formula
+        $materials = [];
+        foreach ($visits as $visit) {
+            if (empty($visit['color_formula'])) continue;
+            $formula = json_decode($visit['color_formula'], true);
+            if (!is_array($formula) || empty($formula['bowls'])) continue;
+            foreach ($formula['bowls'] as $bowl) {
+                if (!empty($bowl['products'])) {
+                    foreach ($bowl['products'] as $prod) {
+                        $name = $prod['name'] ?? '';
+                        $amount = (float)($prod['amount'] ?? 0);
+                        if ($name === '') continue;
+                        if (!isset($materials[$name])) {
+                            $materials[$name] = ['name' => $name, 'total_amount_g' => 0, 'unit' => 'g'];
+                        }
+                        $materials[$name]['total_amount_g'] += $amount;
+                    }
+                }
+                if (!empty($bowl['oxidant']['name'])) {
+                    $oxName = $bowl['oxidant']['name'];
+                    $oxAmount = (float)($bowl['oxidant']['amount'] ?? 0);
+                    if (!isset($materials[$oxName])) {
+                        $materials[$oxName] = ['name' => $oxName, 'total_amount_g' => 0, 'unit' => 'g'];
+                    }
+                    $materials[$oxName]['total_amount_g'] += $oxAmount;
+                }
+            }
+        }
+
+        // 3. Retail prodeje za dnešní návštěvy
+        $visitIds = array_column($visits, 'id');
+        $retailSales = [];
+        if (!empty($visitIds)) {
+            $placeholders = implode(',', array_fill(0, count($visitIds), '?'));
+            $stmt = db()->prepare(
+                "SELECT id, visit_id, items, total, note
+                   FROM retail_sales
+                  WHERE visit_id IN ({$placeholders})"
+            );
+            $stmt->execute($visitIds);
+            foreach ($stmt->fetchAll() as $sale) {
+                $sale['items'] = json_decode($sale['items'] ?? '[]', true);
+                $retailSales[] = $sale;
+            }
+        }
+
+        json_response([
+            'date'      => $today,
+            'materials' => array_values($materials),
+            'retail'    => $retailSales,
+        ]);
+    }
+
     private function validate(array $data): array
     {
         $clientId = (int)($data['client_id'] ?? 0);

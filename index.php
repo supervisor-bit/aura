@@ -74,6 +74,7 @@ $routes = [
     'POST:visits:update'   => ['VisitController',   'update'],
     'POST:visits:delete'   => ['VisitController',   'delete'],
     'POST:visits:billing'  => ['VisitController',   'billing'],
+    'GET:visits:export'    => ['VisitController',   'export'],
 
     // Produkty / ceník
     'GET:products:search'   => ['ProductController', 'search'],
