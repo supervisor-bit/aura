@@ -198,6 +198,18 @@ if ($routeKey === 'GET:auth:check') {
     json_response(['logged_in' => !empty($_SESSION['logged_in'])]);
 }
 
+// ─── API klíč pro /visits/export ──────────────────────────────────────────────
+if ($routeKey === 'GET:visits:export') {
+    $apiKey = $_GET['api_key'] ?? $_SERVER['HTTP_X_API_KEY'] ?? '';
+    if (!hash_equals(SKLAD_API_KEY, $apiKey)) {
+        json_response(['error' => 'Neplatný API klíč'], 403);
+    }
+    // API klíč platný → přeskočit session auth, rovnou dispatch
+    $controller = new VisitController();
+    $controller->export($id, $jsonBody);
+    exit;
+}
+
 // ─── Ověření přihlášení ───────────────────────────────────────────────────────
 if (empty($_SESSION['logged_in'])) {
     if ($method === 'GET' && ($uri === '/' || $resource === '')) {

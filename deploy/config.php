@@ -7,6 +7,9 @@ define('APP_NAME', 'AURA');
 define('APP_ROOT', __DIR__);
 define('BASE_URL', '/');          // app.martvi.cz — virtual host
 
+// ─── API klíč pro /visits/export ──────────────────────────────────────────────
+define('SKLAD_API_KEY', 'b42395f746de9e2fe0ad960394d9c783ea3f1504e03eb08dc87767e24871eb03');
+
 // ─── Chybové hlášení ──────────────────────────────────────────────────────────
 ini_set('display_errors', '0');
 error_reporting(0);
