@@ -129,18 +129,21 @@ class VisitController
     /** GET /visits/export — spotřebované materiály + retail prodeje za dnešní den */
     public function export(?int $id, array $body): void
     {
-        $today = date('Y-m-d');
+        $date = $_GET['date'] ?? date('Y-m-d');
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            json_response(['error' => 'Neplatný formát data (YYYY-MM-DD)'], 400);
+        }
 
-        // 1. Všechny návštěvy dnes s recepturou
+        // 1. Všechny návštěvy za daný den s recepturou
         $stmt = db()->prepare(
             "SELECT v.id, v.visit_date, v.service_name, v.color_formula,
                     c.full_name AS client_name
                FROM client_visits v
                JOIN clients c ON c.id = v.client_id
-              WHERE v.visit_date = :today
+              WHERE v.visit_date = :date
               ORDER BY v.id"
         );
-        $stmt->execute([':today' => $today]);
+        $stmt->execute([':date' => $date]);
         $visits = $stmt->fetchAll();
 
         // 2. Extrahovat materiály z color_formula
@@ -190,7 +193,7 @@ class VisitController
         }
 
         json_response([
-            'date'      => $today,
+            'date'      => $date,
             'materials' => array_values($materials),
             'retail'    => $retailSales,
         ]);
