@@ -1,0 +1,447 @@
+﻿ID;Název;Kategorie;Řada;Objem;Výchozí cena;Aktivní;Retail
+197;"DIAcolor 1";Barva;DIAcolor;;;Ano;Ne
+198;"DIAcolor 3";Barva;DIAcolor;;;Ano;Ne
+199;"DIAcolor 4";Barva;DIAcolor;;;Ano;Ne
+200;"DIAcolor 4.12";Barva;DIAcolor;;;Ano;Ne
+201;"DIAcolor 4.15";Barva;DIAcolor;;;Ano;Ne
+202;"DIAcolor 4.20";Barva;DIAcolor;;;Ano;Ne
+203;"DIAcolor 4.45";Barva;DIAcolor;;;Ano;Ne
+204;"DIAcolor 4.62";Barva;DIAcolor;;;Ano;Ne
+205;"DIAcolor 5";Barva;DIAcolor;;;Ano;Ne
+206;"DIAcolor 5.1";Barva;DIAcolor;;;Ano;Ne
+207;"DIAcolor 5.18";Barva;DIAcolor;;;Ano;Ne
+208;"DIAcolor 5.3";Barva;DIAcolor;;;Ano;Ne
+209;"DIAcolor 5.35";Barva;DIAcolor;;;Ano;Ne
+210;"DIAcolor 5.4";Barva;DIAcolor;;;Ano;Ne
+211;"DIAcolor 5.5";Barva;DIAcolor;;;Ano;Ne
+212;"DIAcolor 5.71";Barva;DIAcolor;;;Ano;Ne
+213;"DIAcolor 5.8";Barva;DIAcolor;;;Ano;Ne
+214;"DIAcolor 6";Barva;DIAcolor;;;Ano;Ne
+215;"DIAcolor 6.1";Barva;DIAcolor;;;Ano;Ne
+216;"DIAcolor 6.12";Barva;DIAcolor;;;Ano;Ne
+217;"DIAcolor 6.23";Barva;DIAcolor;;;Ano;Ne
+218;"DIAcolor 6.3";Barva;DIAcolor;;;Ano;Ne
+219;"DIAcolor 6.31";Barva;DIAcolor;;;Ano;Ne
+220;"DIAcolor 6.34";Barva;DIAcolor;;;Ano;Ne
+221;"DIAcolor 6.35";Barva;DIAcolor;;;Ano;Ne
+222;"DIAcolor 6.45";Barva;DIAcolor;;;Ano;Ne
+223;"DIAcolor 6.60";Barva;DIAcolor;;;Ano;Ne
+224;"DIAcolor 6.8";Barva;DIAcolor;;;Ano;Ne
+225;"DIAcolor 6.84";Barva;DIAcolor;;;Ano;Ne
+226;"DIAcolor 7";Barva;DIAcolor;;;Ano;Ne
+227;"DIAcolor 7.1";Barva;DIAcolor;;;Ano;Ne
+228;"DIAcolor 7.13";Barva;DIAcolor;;;Ano;Ne
+229;"DIAcolor 7.18";Barva;DIAcolor;;;Ano;Ne
+230;"DIAcolor 7.32";Barva;DIAcolor;;;Ano;Ne
+231;"DIAcolor 7.44";Barva;DIAcolor;;;Ano;Ne
+232;"DIAcolor 7.8";Barva;DIAcolor;;;Ano;Ne
+233;"DIAcolor 8";Barva;DIAcolor;;;Ano;Ne
+234;"DIAcolor 8.1";Barva;DIAcolor;;;Ano;Ne
+235;"DIAcolor 8.13";Barva;DIAcolor;;;Ano;Ne
+236;"DIAcolor 8.2";Barva;DIAcolor;;;Ano;Ne
+237;"DIAcolor 8.23";Barva;DIAcolor;;;Ano;Ne
+238;"DIAcolor 8.3";Barva;DIAcolor;;;Ano;Ne
+239;"DIAcolor 8.31";Barva;DIAcolor;;;Ano;Ne
+240;"DIAcolor 8.34";Barva;DIAcolor;;;Ano;Ne
+241;"DIAcolor 8.43";Barva;DIAcolor;;;Ano;Ne
+242;"DIAcolor 9";Barva;DIAcolor;;;Ano;Ne
+243;"DIAcolor 9.1";Barva;DIAcolor;;;Ano;Ne
+244;"DIAcolor 9.13";Barva;DIAcolor;;;Ano;Ne
+245;"DIAcolor 9.82";Barva;DIAcolor;;;Ano;Ne
+246;"DIAcolor CLEAR";Barva;DIAcolor;;;Ano;Ne
+1;"Inoa 1";Barva;Inoa;;;Ano;Ne
+83;"Inoa 10";Barva;Inoa;;;Ano;Ne
+84;"Inoa 10.1";Barva;Inoa;;;Ano;Ne
+85;"Inoa 10.11";Barva;Inoa;;;Ano;Ne
+86;"Inoa 10.12";Barva;Inoa;;;Ano;Ne
+87;"Inoa 10.21";Barva;Inoa;;;Ano;Ne
+2;"Inoa 2";Barva;Inoa;;;Ano;Ne
+3;"Inoa 2.10";Barva;Inoa;;;Ano;Ne
+4;"Inoa 3";Barva;Inoa;;;Ano;Ne
+5;"Inoa 4";Barva;Inoa;;;Ano;Ne
+6;"Inoa 4.0";Barva;Inoa;;;Ano;Ne
+7;"Inoa 4.15";Barva;Inoa;;;Ano;Ne
+8;"Inoa 4.20";Barva;Inoa;;;Ano;Ne
+9;"Inoa 4.26";Barva;Inoa;;;Ano;Ne
+10;"Inoa 4.3";Barva;Inoa;;;Ano;Ne
+11;"Inoa 4.35";Barva;Inoa;;;Ano;Ne
+12;"Inoa 4.45";Barva;Inoa;;;Ano;Ne
+13;"Inoa 4.56";Barva;Inoa;;;Ano;Ne
+14;"Inoa 4.62";Barva;Inoa;;;Ano;Ne
+15;"Inoa 4.8";Barva;Inoa;;;Ano;Ne
+16;"Inoa 5";Barva;Inoa;;;Ano;Ne
+17;"Inoa 5.0";Barva;Inoa;;;Ano;Ne
+18;"Inoa 5.1";Barva;Inoa;;;Ano;Ne
+19;"Inoa 5.12";Barva;Inoa;;;Ano;Ne
+20;"Inoa 5.15";Barva;Inoa;;;Ano;Ne
+21;"Inoa 5.17";Barva;Inoa;;;Ano;Ne
+22;"Inoa 5.18";Barva;Inoa;;;Ano;Ne
+23;"Inoa 5.25";Barva;Inoa;;;Ano;Ne
+24;"Inoa 5.26";Barva;Inoa;;;Ano;Ne
+25;"Inoa 5.3";Barva;Inoa;;;Ano;Ne
+26;"Inoa 5.32";Barva;Inoa;;;Ano;Ne
+27;"Inoa 5.35";Barva;Inoa;;;Ano;Ne
+28;"Inoa 5.4";Barva;Inoa;;;Ano;Ne
+29;"Inoa 5.5";Barva;Inoa;;;Ano;Ne
+30;"Inoa 5.60";Barva;Inoa;;;Ano;Ne
+31;"Inoa 5.62";Barva;Inoa;;;Ano;Ne
+32;"Inoa 5.8";Barva;Inoa;;;Ano;Ne
+33;"Inoa 6";Barva;Inoa;;;Ano;Ne
+34;"Inoa 6.0";Barva;Inoa;;;Ano;Ne
+35;"Inoa 6.1";Barva;Inoa;;;Ano;Ne
+36;"Inoa 6.11";Barva;Inoa;;;Ano;Ne
+37;"Inoa 6.13";Barva;Inoa;;;Ano;Ne
+38;"Inoa 6.23";Barva;Inoa;;;Ano;Ne
+39;"Inoa 6.3";Barva;Inoa;;;Ano;Ne
+40;"Inoa 6.32";Barva;Inoa;;;Ano;Ne
+41;"Inoa 6.34";Barva;Inoa;;;Ano;Ne
+42;"Inoa 6.35";Barva;Inoa;;;Ano;Ne
+43;"Inoa 6.40";Barva;Inoa;;;Ano;Ne
+44;"Inoa 6.45";Barva;Inoa;;;Ano;Ne
+45;"Inoa 6.46";Barva;Inoa;;;Ano;Ne
+46;"Inoa 6.66";Barva;Inoa;;;Ano;Ne
+47;"Inoa 6.8";Barva;Inoa;;;Ano;Ne
+48;"Inoa 7";Barva;Inoa;;;Ano;Ne
+49;"Inoa 7.0";Barva;Inoa;;;Ano;Ne
+50;"Inoa 7.1";Barva;Inoa;;;Ano;Ne
+51;"Inoa 7.11";Barva;Inoa;;;Ano;Ne
+52;"Inoa 7.13";Barva;Inoa;;;Ano;Ne
+53;"Inoa 7.18";Barva;Inoa;;;Ano;Ne
+54;"Inoa 7.23";Barva;Inoa;;;Ano;Ne
+55;"Inoa 7.3";Barva;Inoa;;;Ano;Ne
+56;"Inoa 7.31";Barva;Inoa;;;Ano;Ne
+57;"Inoa 7.34";Barva;Inoa;;;Ano;Ne
+58;"Inoa 7.35";Barva;Inoa;;;Ano;Ne
+59;"Inoa 7.4";Barva;Inoa;;;Ano;Ne
+60;"Inoa 7.43";Barva;Inoa;;;Ano;Ne
+61;"Inoa 7.44";Barva;Inoa;;;Ano;Ne
+62;"Inoa 7.8";Barva;Inoa;;;Ano;Ne
+63;"Inoa 8";Barva;Inoa;;;Ano;Ne
+64;"Inoa 8.0";Barva;Inoa;;;Ano;Ne
+65;"Inoa 8.1";Barva;Inoa;;;Ano;Ne
+66;"Inoa 8.11";Barva;Inoa;;;Ano;Ne
+67;"Inoa 8.12";Barva;Inoa;;;Ano;Ne
+68;"Inoa 8.13";Barva;Inoa;;;Ano;Ne
+69;"Inoa 8.21";Barva;Inoa;;;Ano;Ne
+70;"Inoa 8.23";Barva;Inoa;;;Ano;Ne
+71;"Inoa 8.3";Barva;Inoa;;;Ano;Ne
+72;"Inoa 8.31";Barva;Inoa;;;Ano;Ne
+73;"Inoa 8.34";Barva;Inoa;;;Ano;Ne
+74;"Inoa 9";Barva;Inoa;;;Ano;Ne
+75;"Inoa 9.0";Barva;Inoa;;;Ano;Ne
+76;"Inoa 9.1";Barva;Inoa;;;Ano;Ne
+77;"Inoa 9.11";Barva;Inoa;;;Ano;Ne
+78;"Inoa 9.12";Barva;Inoa;;;Ano;Ne
+79;"Inoa 9.13";Barva;Inoa;;;Ano;Ne
+80;"Inoa 9.2";Barva;Inoa;;;Ano;Ne
+81;"Inoa 9.3";Barva;Inoa;;;Ano;Ne
+82;"Inoa 9.31";Barva;Inoa;;;Ano;Ne
+88;"Inoa CLEAR";Barva;Inoa;;;Ano;Ne
+89;"Inoa Boosters Blue";Barva;Inoa Boosters;;;Ano;Ne
+90;"Inoa Boosters Green";Barva;Inoa Boosters;;;Ano;Ne
+91;"Inoa Boosters Violet";Barva;Inoa Boosters;;;Ano;Ne
+92;"Majirel 1";Barva;Majirel;;;Ano;Ne
+169;"Majirel 10";Barva;Majirel;;;Ano;Ne
+170;"Majirel 10.1";Barva;Majirel;;;Ano;Ne
+171;"Majirel 10.12";Barva;Majirel;;;Ano;Ne
+172;"Majirel 10.21";Barva;Majirel;;;Ano;Ne
+173;"Majirel 10.31";Barva;Majirel;;;Ano;Ne
+93;"Majirel 2.10";Barva;Majirel;;;Ano;Ne
+94;"Majirel 3";Barva;Majirel;;;Ano;Ne
+95;"Majirel 4";Barva;Majirel;;;Ano;Ne
+96;"Majirel 4.0";Barva;Majirel;;;Ano;Ne
+97;"Majirel 4.15";Barva;Majirel;;;Ano;Ne
+98;"Majirel 4.20";Barva;Majirel;;;Ano;Ne
+99;"Majirel 4.3";Barva;Majirel;;;Ano;Ne
+100;"Majirel 4.35";Barva;Majirel;;;Ano;Ne
+101;"Majirel 4.45";Barva;Majirel;;;Ano;Ne
+102;"Majirel 4.56";Barva;Majirel;;;Ano;Ne
+103;"Majirel 4.62";Barva;Majirel;;;Ano;Ne
+104;"Majirel 4.8";Barva;Majirel;;;Ano;Ne
+105;"Majirel 5";Barva;Majirel;;;Ano;Ne
+106;"Majirel 5.0";Barva;Majirel;;;Ano;Ne
+107;"Majirel 5.1";Barva;Majirel;;;Ano;Ne
+108;"Majirel 5.12";Barva;Majirel;;;Ano;Ne
+109;"Majirel 5.15";Barva;Majirel;;;Ano;Ne
+110;"Majirel 5.18";Barva;Majirel;;;Ano;Ne
+111;"Majirel 5.26";Barva;Majirel;;;Ano;Ne
+112;"Majirel 5.3";Barva;Majirel;;;Ano;Ne
+113;"Majirel 5.32";Barva;Majirel;;;Ano;Ne
+114;"Majirel 5.35";Barva;Majirel;;;Ano;Ne
+115;"Majirel 5.4";Barva;Majirel;;;Ano;Ne
+116;"Majirel 5.5";Barva;Majirel;;;Ano;Ne
+117;"Majirel 5.52";Barva;Majirel;;;Ano;Ne
+118;"Majirel 5.60";Barva;Majirel;;;Ano;Ne
+119;"Majirel 5.8";Barva;Majirel;;;Ano;Ne
+120;"Majirel 6";Barva;Majirel;;;Ano;Ne
+121;"Majirel 6.0";Barva;Majirel;;;Ano;Ne
+122;"Majirel 6.1";Barva;Majirel;;;Ano;Ne
+123;"Majirel 6.13";Barva;Majirel;;;Ano;Ne
+124;"Majirel 6.23";Barva;Majirel;;;Ano;Ne
+125;"Majirel 6.3";Barva;Majirel;;;Ano;Ne
+126;"Majirel 6.32";Barva;Majirel;;;Ano;Ne
+127;"Majirel 6.34";Barva;Majirel;;;Ano;Ne
+128;"Majirel 6.35";Barva;Majirel;;;Ano;Ne
+129;"Majirel 6.45";Barva;Majirel;;;Ano;Ne
+130;"Majirel 6.46";Barva;Majirel;;;Ano;Ne
+131;"Majirel 6.64";Barva;Majirel;;;Ano;Ne
+132;"Majirel 6.66";Barva;Majirel;;;Ano;Ne
+133;"Majirel 7";Barva;Majirel;;;Ano;Ne
+134;"Majirel 7.0";Barva;Majirel;;;Ano;Ne
+135;"Majirel 7.1";Barva;Majirel;;;Ano;Ne
+136;"Majirel 7.11";Barva;Majirel;;;Ano;Ne
+137;"Majirel 7.12";Barva;Majirel;;;Ano;Ne
+138;"Majirel 7.13";Barva;Majirel;;;Ano;Ne
+139;"Majirel 7.18";Barva;Majirel;;;Ano;Ne
+140;"Majirel 7.23";Barva;Majirel;;;Ano;Ne
+141;"Majirel 7.3";Barva;Majirel;;;Ano;Ne
+142;"Majirel 7.31";Barva;Majirel;;;Ano;Ne
+143;"Majirel 7.35";Barva;Majirel;;;Ano;Ne
+144;"Majirel 7.4";Barva;Majirel;;;Ano;Ne
+145;"Majirel 7.40";Barva;Majirel;;;Ano;Ne
+146;"Majirel 7.43";Barva;Majirel;;;Ano;Ne
+147;"Majirel 7.44";Barva;Majirel;;;Ano;Ne
+148;"Majirel 7.45";Barva;Majirel;;;Ano;Ne
+149;"Majirel 7.8";Barva;Majirel;;;Ano;Ne
+150;"Majirel 8";Barva;Majirel;;;Ano;Ne
+151;"Majirel 8.0";Barva;Majirel;;;Ano;Ne
+152;"Majirel 8.1";Barva;Majirel;;;Ano;Ne
+153;"Majirel 8.11";Barva;Majirel;;;Ano;Ne
+154;"Majirel 8.13";Barva;Majirel;;;Ano;Ne
+155;"Majirel 8.21";Barva;Majirel;;;Ano;Ne
+156;"Majirel 8.3";Barva;Majirel;;;Ano;Ne
+157;"Majirel 8.31";Barva;Majirel;;;Ano;Ne
+158;"Majirel 8.34";Barva;Majirel;;;Ano;Ne
+159;"Majirel 8.43";Barva;Majirel;;;Ano;Ne
+160;"Majirel 9";Barva;Majirel;;;Ano;Ne
+161;"Majirel 9.03";Barva;Majirel;;;Ano;Ne
+162;"Majirel 9.1";Barva;Majirel;;;Ano;Ne
+163;"Majirel 9.11";Barva;Majirel;;;Ano;Ne
+164;"Majirel 9.12";Barva;Majirel;;;Ano;Ne
+165;"Majirel 9.13";Barva;Majirel;;;Ano;Ne
+166;"Majirel 9.22";Barva;Majirel;;;Ano;Ne
+167;"Majirel 9.3";Barva;Majirel;;;Ano;Ne
+168;"Majirel 9.31";Barva;Majirel;;;Ano;Ne
+174;"Majirel Boosters Contrast";Barva;Majirel Boosters;;;Ano;Ne
+175;"Majirel Boosters Magenta";Barva;Majirel Boosters;;;Ano;Ne
+176;"Majirel Boosters Orange";Barva;Majirel Boosters;;;Ano;Ne
+177;"Majirel Boosters Red";Barva;Majirel Boosters;;;Ano;Ne
+178;"Majirel Cool Cover 4";Barva;Majirel Cool Cover;;;Ano;Ne
+179;"Majirel Cool Cover 5";Barva;Majirel Cool Cover;;;Ano;Ne
+180;"Majirel Cool Cover 5.1";Barva;Majirel Cool Cover;;;Ano;Ne
+181;"Majirel Cool Cover 5.17";Barva;Majirel Cool Cover;;;Ano;Ne
+182;"Majirel Cool Cover 6";Barva;Majirel Cool Cover;;;Ano;Ne
+183;"Majirel Cool Cover 6.1";Barva;Majirel Cool Cover;;;Ano;Ne
+184;"Majirel Cool Cover 6.17";Barva;Majirel Cool Cover;;;Ano;Ne
+185;"Majirel Cool Cover 7";Barva;Majirel Cool Cover;;;Ano;Ne
+186;"Majirel Cool Cover 7.1";Barva;Majirel Cool Cover;;;Ano;Ne
+187;"Majirel Cool Cover 8";Barva;Majirel Cool Cover;;;Ano;Ne
+188;"Majirel Cool Cover 8.1";Barva;Majirel Cool Cover;;;Ano;Ne
+189;"Majirel Cool Cover 9";Barva;Majirel Cool Cover;;;Ano;Ne
+195;"Majirel High Lift 900S";Barva;Majirel High Lift;;;Ano;Ne
+196;"Majirel High Lift 901S";Barva;Majirel High Lift;;;Ano;Ne
+191;"Majirel High Lift ASH VIOLET";Barva;Majirel High Lift;;;Ano;Ne
+190;"Majirel High Lift ASH+";Barva;Majirel High Lift;;;Ano;Ne
+194;"Majirel High Lift BEIGE";Barva;Majirel High Lift;;;Ano;Ne
+192;"Majirel High Lift NEUTR";Barva;Majirel High Lift;;;Ano;Ne
+193;"Majirel High Lift VIOLET";Barva;Majirel High Lift;;;Ano;Ne
+415;"Air Light Pro Fén Air Light Pro";Elektro;Air Light Pro;1 ks;;Ano;Ano
+416;"SteamPod SteamPod 3.0";Elektro;SteamPod;1 ks;;Ano;Ano
+418;"SteamPod SteamPod 4 Meteora";Elektro;SteamPod;1 ks;;Ano;Ano
+417;"SteamPod SteamPod 4.0";Elektro;SteamPod;1 ks;;Ano;Ano
+434;"Tecni.art Fix Max";Gel;Tecni.art;200 ml;;Ano;Ano
+427;"Infinium Infinium Pure Extra Strong";Lak;Infinium;300 ml;;Ano;Ano
+428;"Infinium Infinium Pure Soft";Lak;Infinium;300 ml;;Ano;Ano
+429;"Infinium Infinium Pure Strong";Lak;Infinium;300 ml;;Ano;Ano
+431;"Tecni.art Anti Frizz";Lak;Tecni.art;250 ml;;Ano;Ano
+317;"Blond Studio 9";Melír;Blond Studio;;;Ano;Ne
+318;"Blond Studio Bonder Inside-9";Melír;Blond Studio;;;Ano;Ne
+319;"Blond Studio Fialový zesvětlující balzám-8";Melír;Blond Studio;;;Ano;Ne
+316;"Blond Studio Multi Techniques-8";Melír;Blond Studio;;;Ano;Ne
+315;"Blond Studio Platinum Plus-7";Melír;Blond Studio;;;Ano;Ne
+332;"Oxidant Blond Studio Oleo Vyvíječ 6% (20 Vol)";Oxy;Oxidant;;;Ano;Ne
+333;"Oxidant Blond Studio Oleo Vyvíječ 9% (30 Vol)";Oxy;Oxidant;;;Ano;Ne
+328;"Oxidant DIA Vyvíječ 15 Vol (4.5%)";Oxy;Oxidant;;;Ano;Ne
+326;"Oxidant DIA Vyvíječ 6 Vol (1.8%)";Oxy;Oxidant;;;Ano;Ne
+327;"Oxidant DIA Vyvíječ 9 Vol (2.7%)";Oxy;Oxidant;;;Ano;Ne
+320;"Oxidant Inoa Oleo Vyvíječ 3% (10 Vol)";Oxy;Oxidant;;;Ano;Ne
+321;"Oxidant Inoa Oleo Vyvíječ 6% (20 Vol)";Oxy;Oxidant;;;Ano;Ne
+322;"Oxidant Inoa Oleo Vyvíječ 9% (30 Vol)";Oxy;Oxidant;;;Ano;Ne
+323;"Oxidant Majirel Ox. Krém 3.75%";Oxy;Oxidant;;;Ano;Ne
+324;"Oxidant Majirel Ox. Krém 6%";Oxy;Oxidant;;;Ano;Ne
+325;"Oxidant Majirel Ox. Krém 9%";Oxy;Oxidant;;;Ano;Ne
+331;"Oxidant Nutri Vyvíječ 12% (40 Vol)";Oxy;Oxidant;;;Ano;Ne
+329;"Oxidant Nutri Vyvíječ 6% (20 Vol)";Oxy;Oxidant;;;Ano;Ne
+330;"Oxidant Nutri Vyvíječ 9% (30 Vol)";Oxy;Oxidant;;;Ano;Ne
+435;"Tecni.art Fix Paste";Pasta;Tecni.art;75 ml;;Ano;Ano
+438;"Tecni.art Flex Depolish";Pasta;Tecni.art;100 ml;;Ano;Ano
+443;"Tecni.art Volume Extra Full";Pěna;Tecni.art;250 ml;;Ano;Ano
+446;"Tecni.art Volume Rootlift";Pěna;Tecni.art;250 ml;;Ano;Ano
+303;"DIALight 0 (Clear)";Přeliv;DIALight;;;Ano;Ne
+292;"DIALight 10.01";Přeliv;DIALight;;;Ano;Ne
+293;"DIALight 10.02";Přeliv;DIALight;;;Ano;Ne
+294;"DIALight 10.12";Přeliv;DIALight;;;Ano;Ne
+295;"DIALight 10.13";Přeliv;DIALight;;;Ano;Ne
+296;"DIALight 10.18";Přeliv;DIALight;;;Ano;Ne
+297;"DIALight 10.21";Přeliv;DIALight;;;Ano;Ne
+298;"DIALight 10.22";Přeliv;DIALight;;;Ano;Ne
+299;"DIALight 10.23";Přeliv;DIALight;;;Ano;Ne
+300;"DIALight 10.24";Přeliv;DIALight;;;Ano;Ne
+301;"DIALight 10.32";Přeliv;DIALight;;;Ano;Ne
+302;"DIALight 10.82";Přeliv;DIALight;;;Ano;Ne
+247;"DIALight 4";Přeliv;DIALight;;;Ano;Ne
+248;"DIALight 5";Přeliv;DIALight;;;Ano;Ne
+249;"DIALight 5.11";Přeliv;DIALight;;;Ano;Ne
+250;"DIALight 5.8";Přeliv;DIALight;;;Ano;Ne
+251;"DIALight 6";Přeliv;DIALight;;;Ano;Ne
+252;"DIALight 6.1";Přeliv;DIALight;;;Ano;Ne
+253;"DIALight 6.11";Přeliv;DIALight;;;Ano;Ne
+254;"DIALight 6.23";Přeliv;DIALight;;;Ano;Ne
+255;"DIALight 6.3";Přeliv;DIALight;;;Ano;Ne
+256;"DIALight 6.35";Přeliv;DIALight;;;Ano;Ne
+257;"DIALight 6.45";Přeliv;DIALight;;;Ano;Ne
+258;"DIALight 6.64";Přeliv;DIALight;;;Ano;Ne
+259;"DIALight 6.66";Přeliv;DIALight;;;Ano;Ne
+260;"DIALight 6.8";Přeliv;DIALight;;;Ano;Ne
+261;"DIALight 7";Přeliv;DIALight;;;Ano;Ne
+262;"DIALight 7.01";Přeliv;DIALight;;;Ano;Ne
+263;"DIALight 7.12";Přeliv;DIALight;;;Ano;Ne
+264;"DIALight 7.18";Přeliv;DIALight;;;Ano;Ne
+265;"DIALight 7.23";Přeliv;DIALight;;;Ano;Ne
+266;"DIALight 7.3";Přeliv;DIALight;;;Ano;Ne
+267;"DIALight 7.31";Přeliv;DIALight;;;Ano;Ne
+268;"DIALight 7.4";Přeliv;DIALight;;;Ano;Ne
+269;"DIALight 7.43";Přeliv;DIALight;;;Ano;Ne
+270;"DIALight 8";Přeliv;DIALight;;;Ano;Ne
+271;"DIALight 8.1";Přeliv;DIALight;;;Ano;Ne
+272;"DIALight 8.11";Přeliv;DIALight;;;Ano;Ne
+273;"DIALight 8.13";Přeliv;DIALight;;;Ano;Ne
+274;"DIALight 8.21";Přeliv;DIALight;;;Ano;Ne
+275;"DIALight 8.23";Přeliv;DIALight;;;Ano;Ne
+276;"DIALight 8.24";Přeliv;DIALight;;;Ano;Ne
+277;"DIALight 8.28";Přeliv;DIALight;;;Ano;Ne
+278;"DIALight 8.3";Přeliv;DIALight;;;Ano;Ne
+279;"DIALight 8.34";Přeliv;DIALight;;;Ano;Ne
+280;"DIALight 8.43";Přeliv;DIALight;;;Ano;Ne
+281;"DIALight 9";Přeliv;DIALight;;;Ano;Ne
+282;"DIALight 9.01";Přeliv;DIALight;;;Ano;Ne
+283;"DIALight 9.02";Přeliv;DIALight;;;Ano;Ne
+284;"DIALight 9.03";Přeliv;DIALight;;;Ano;Ne
+285;"DIALight 9.11";Přeliv;DIALight;;;Ano;Ne
+286;"DIALight 9.12";Přeliv;DIALight;;;Ano;Ne
+287;"DIALight 9.13";Přeliv;DIALight;;;Ano;Ne
+288;"DIALight 9.2";Přeliv;DIALight;;;Ano;Ne
+289;"DIALight 9.21";Přeliv;DIALight;;;Ano;Ne
+290;"DIALight 9.3";Přeliv;DIALight;;;Ano;Ne
+291;"DIALight 9.82";Přeliv;DIALight;;;Ano;Ne
+304;"DIALight Boosters Blue";Přeliv;DIALight Boosters;;;Ano;Ne
+305;"DIALight Boosters Orange";Přeliv;DIALight Boosters;;;Ano;Ne
+306;"DIALight Boosters Red";Přeliv;DIALight Boosters;;;Ano;Ne
+307;"DIALight Boosters Violet";Přeliv;DIALight Boosters;;;Ano;Ne
+308;"DIALight Boosters Yellow";Přeliv;DIALight Boosters;;;Ano;Ne
+309;"DIALight Boostery Červený";Přeliv;DIALight Boostery;;;Ano;Ne
+310;"DIALight Boostery Duhový";Přeliv;DIALight Boostery;;;Ano;Ne
+311;"DIALight Boostery Kovový";Přeliv;DIALight Boostery;;;Ano;Ne
+312;"DIALight Boostery Měděný";Přeliv;DIALight Boostery;;;Ano;Ne
+313;"DIALight Boostery Popelavý";Přeliv;DIALight Boostery;;;Ano;Ne
+314;"DIALight Boostery Zlatý";Přeliv;DIALight Boostery;;;Ano;Ne
+444;"Tecni.art Volume Dust";Pudr;Tecni.art;7 g;;Ano;Ano
+340;"Absolut Repair Maska";Retail;Absolut Repair;250 ml;;Ano;Ano
+341;"Absolut Repair Maska zlatá";Retail;Absolut Repair;250 ml;;Ano;Ano
+342;"Absolut Repair Olej";Retail;Absolut Repair;90 ml;;Ano;Ano
+343;"Absolut Repair Pěna";Retail;Absolut Repair;200 ml;;Ano;Ano
+345;"Absolut Repair Šampon";Retail;Absolut Repair;300 ml;;Ano;Ano
+344;"Absolut Repair Šampon";Retail;Absolut Repair;500 ml;;Ano;Ano
+346;"Absolut Repair Molecular Bezoplachová maska";Retail;Absolut Repair Molecular;100 ml;;Ano;Ano
+347;"Absolut Repair Molecular Discovery Box Mini Duo Kit";Retail;Absolut Repair Molecular;1 set;;Ano;Ano
+348;"Absolut Repair Molecular Discovery Box Mini Trio Kit";Retail;Absolut Repair Molecular;1 set;;Ano;Ano
+349;"Absolut Repair Molecular Dvoufázový olej";Retail;Absolut Repair Molecular;90 ml;;Ano;Ano
+350;"Absolut Repair Molecular Maska";Retail;Absolut Repair Molecular;250 ml;;Ano;Ano
+352;"Absolut Repair Molecular Šampon";Retail;Absolut Repair Molecular;500 ml;;Ano;Ano
+353;"Absolut Repair Molecular Šampon";Retail;Absolut Repair Molecular;300 ml;;Ano;Ano
+351;"Absolut Repair Molecular Sérum";Retail;Absolut Repair Molecular;250 ml;;Ano;Ano
+354;"Aminexil Advanced Aminexil kúra";Retail;Aminexil Advanced;10x6 ml;;Ano;Ano
+355;"Aminexil Advanced Aminexil kúra";Retail;Aminexil Advanced;42x6 ml;;Ano;Ano
+356;"Aminexil Advanced Anti Hair Loss Activator";Retail;Aminexil Advanced;90 ml;;Ano;Ano
+357;"Blondifier Cool péče";Retail;Blondifier;200 ml;;Ano;Ano
+358;"Blondifier Gloss šampon";Retail;Blondifier;500 ml;;Ano;Ano
+359;"Blondifier Gloss šampon";Retail;Blondifier;300 ml;;Ano;Ano
+360;"Blondifier Maska";Retail;Blondifier;250 ml;;Ano;Ano
+361;"Blondifier Pěna";Retail;Blondifier;200 ml;;Ano;Ano
+362;"Curl Expression Curls reviver";Retail;Curl Expression;190 ml;;Ano;Ano
+363;"Curl Expression Definition activator";Retail;Curl Expression;250 ml;;Ano;Ano
+364;"Curl Expression Long lasting moisturizer";Retail;Curl Expression;200 ml;;Ano;Ano
+365;"Curl Expression Maska";Retail;Curl Expression;250 ml;;Ano;Ano
+366;"Curl Expression Pěna 10 v 1";Retail;Curl Expression;250 ml;;Ano;Ano
+367;"Curl Expression Šampon";Retail;Curl Expression;500 ml;;Ano;Ano
+368;"Curl Expression Šampon";Retail;Curl Expression;300 ml;;Ano;Ano
+369;"Liss Unlimited Maska";Retail;Liss Unlimited;250 ml;;Ano;Ano
+371;"Liss Unlimited Šampon";Retail;Liss Unlimited;300 ml;;Ano;Ano
+370;"Liss Unlimited Šampon";Retail;Liss Unlimited;500 ml;;Ano;Ano
+372;"Liss Unlimited Sérum";Retail;Liss Unlimited;125 ml;;Ano;Ano
+373;"Metal Detox Discovery Box Mini Duo Kit";Retail;Metal Detox;1 set;;Ano;Ano
+374;"Metal Detox Discovery Box Mini Trio Kit";Retail;Metal Detox;1 set;;Ano;Ano
+375;"Metal Detox Krém";Retail;Metal Detox;100 ml;;Ano;Ano
+376;"Metal Detox Maska";Retail;Metal Detox;250 ml;;Ano;Ano
+377;"Metal Detox Olej";Retail;Metal Detox;50 ml;;Ano;Ano
+378;"Metal Detox Šampon";Retail;Metal Detox;500 ml;;Ano;Ano
+379;"Metal Detox Šampon";Retail;Metal Detox;300 ml;;Ano;Ano
+380;"Pro Longer Krém";Retail;Pro Longer;150 ml;;Ano;Ano
+381;"Pro Longer Maska";Retail;Pro Longer;250 ml;;Ano;Ano
+383;"Pro Longer Péče";Retail;Pro Longer;200 ml;;Ano;Ano
+382;"Pro Longer Péče";Retail;Pro Longer;500 ml;;Ano;Ano
+385;"Pro Longer Šampon";Retail;Pro Longer;300 ml;;Ano;Ano
+384;"Pro Longer Šampon";Retail;Pro Longer;500 ml;;Ano;Ano
+393;"Scalp Advanced 2 in 1 Clay";Retail;Scalp Advanced;250 ml;;Ano;Ano
+391;"Scalp Advanced Dermo Clarifier šampon";Retail;Scalp Advanced;300 ml;;Ano;Ano
+390;"Scalp Advanced Dermo Clarifier šampon";Retail;Scalp Advanced;500 ml;;Ano;Ano
+388;"Scalp Advanced Dermo Purifier šampon";Retail;Scalp Advanced;500 ml;;Ano;Ano
+389;"Scalp Advanced Dermo Purifier šampon";Retail;Scalp Advanced;300 ml;;Ano;Ano
+386;"Scalp Advanced Dermo Regulator šampon";Retail;Scalp Advanced;500 ml;;Ano;Ano
+387;"Scalp Advanced Dermo Regulator šampon";Retail;Scalp Advanced;300 ml;;Ano;Ano
+392;"Scalp Advanced Intense Soother";Retail;Scalp Advanced;200 ml;;Ano;Ano
+394;"Serioxyl Advanced Bodyfying šampon";Retail;Serioxyl Advanced;500 ml;;Ano;Ano
+395;"Serioxyl Advanced Bodyfying šampon";Retail;Serioxyl Advanced;300 ml;;Ano;Ano
+396;"Serioxyl Advanced Density Activator";Retail;Serioxyl Advanced;90 ml;;Ano;Ano
+397;"Silver Péče";Retail;Silver;200 ml;;Ano;Ano
+398;"Silver Šampon";Retail;Silver;500 ml;;Ano;Ano
+399;"Silver Šampon";Retail;Silver;300 ml;;Ano;Ano
+419;"SteamPod Profesionální vyhlazující péče";Retail;SteamPod;50 ml;;Ano;Ano
+432;"Tecni.art Fix Design";Retail;Tecni.art;1000 ml;;Ano;Ano
+433;"Tecni.art Fix Design";Retail;Tecni.art;200 ml;;Ano;Ano
+400;"Vitamino Color Maska";Retail;Vitamino Color;250 ml;;Ano;Ano
+401;"Vitamino Color Péče";Retail;Vitamino Color;500 ml;;Ano;Ano
+402;"Vitamino Color Péče";Retail;Vitamino Color;200 ml;;Ano;Ano
+403;"Vitamino Color Šampon";Retail;Vitamino Color;500 ml;;Ano;Ano
+404;"Vitamino Color Šampon";Retail;Vitamino Color;300 ml;;Ano;Ano
+405;"Vitamino Color Sprej 10 v 1";Retail;Vitamino Color;190 ml;;Ano;Ano
+406;"Vitamino Color Spectrum Bezoplachové sérum";Retail;Vitamino Color Spectrum;50 ml;;Ano;Ano
+407;"Vitamino Color Spectrum Intenzivní péče";Retail;Vitamino Color Spectrum;200 ml;;Ano;Ano
+408;"Vitamino Color Spectrum Maska";Retail;Vitamino Color Spectrum;250 ml;;Ano;Ano
+409;"Vitamino Color Spectrum Neutraliz. šampon fialový";Retail;Vitamino Color Spectrum;500 ml;;Ano;Ano
+410;"Vitamino Color Spectrum Neutraliz. šampon modrý";Retail;Vitamino Color Spectrum;500 ml;;Ano;Ano
+411;"Vitamino Color Spectrum Neutraliz. šampon zelený";Retail;Vitamino Color Spectrum;500 ml;;Ano;Ano
+412;"Vitamino Color Spectrum Neutraliz. šampon zelený";Retail;Vitamino Color Spectrum;300 ml;;Ano;Ano
+414;"Vitamino Color Spectrum Šampon";Retail;Vitamino Color Spectrum;300 ml;;Ano;Ano
+413;"Vitamino Color Spectrum Šampon";Retail;Vitamino Color Spectrum;500 ml;;Ano;Ano
+338;"Ostatní Efassor sáček";Speciál;Ostatní;;;Ano;Ne
+339;"Ostatní Efassor ubrousky";Speciál;Ostatní;;;Ano;Ne
+420;"Hair Touch Up Černá 1-3";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+421;"Hair Touch Up Hnědá 3-5";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+422;"Hair Touch Up Mahagon 5-6";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+423;"Hair Touch Up Světle hnědá 5-6";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+424;"Hair Touch Up Tmavá blond 6-7";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+425;"Hair Touch Up Zlatá blond 7-9";Sprej;Hair Touch Up;75 ml;;Ano;Ano
+426;"Homme Clay";Styling;Homme;50 ml;;Ano;Ano
+430;"Tecni.art All-in-1 Performer";Styling;Tecni.art;190 ml;;Ano;Ano
+436;"Tecni.art Flex Blowdry";Styling;Tecni.art;150 ml;;Ano;Ano
+437;"Tecni.art Flex Curl Bounce";Styling;Tecni.art;150 ml;;Ano;Ano
+439;"Tecni.art Flex Liss Control";Styling;Tecni.art;150 ml;;Ano;Ano
+440;"Tecni.art Flex Pli";Styling;Tecni.art;190 ml;;Ano;Ano
+441;"Tecni.art Flex Waves";Styling;Tecni.art;150 ml;;Ano;Ano
+442;"Tecni.art Flex Web";Styling;Tecni.art;190 ml;;Ano;Ano
+445;"Tecni.art Volume Panache";Styling;Tecni.art;250 ml;;Ano;Ano
+334;"Preparace Dulcia Advanced 0";Trvalá;Preparace;;;Ano;Ne
+335;"Preparace Dulcia Advanced 1";Trvalá;Preparace;;;Ano;Ne
+336;"Preparace Dulcia Advanced 2";Trvalá;Preparace;;;Ano;Ne
+337;"Preparace Dulcia Advanced 3";Trvalá;Preparace;;;Ano;Ne
