@@ -77,4 +77,16 @@ class ProductController
         Product::delete($id);
         json_response(['ok' => true]);
     }
+
+    /** GET /products/export — export všech aktivních produktů pro sklad */
+    public function exportAll(?int $id, array $body): void
+    {
+        $stmt = db()->query(
+            "SELECT id, title, category, series, volume, default_price, is_retail
+               FROM price_list_items
+              WHERE is_active = 1
+              ORDER BY is_retail, series, title"
+        );
+        json_response($stmt->fetchAll());
+    }
 }
