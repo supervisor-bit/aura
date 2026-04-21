@@ -1,3 +1,6 @@
 .DS_Store
 *.log
 .env
+cookies.txt
+page.html
+deploy/*.tar.gz

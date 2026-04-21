@@ -175,21 +175,18 @@ class VisitController
             }
         }
 
-        // 3. Retail prodeje za dnešní návštěvy
-        $visitIds = array_column($visits, 'id');
+        // 3. Retail prodeje za daný den, včetně anonymních mimo návštěvu
         $retailSales = [];
-        if (!empty($visitIds)) {
-            $placeholders = implode(',', array_fill(0, count($visitIds), '?'));
-            $stmt = db()->prepare(
-                "SELECT id, visit_id, items, total, note
-                   FROM retail_sales
-                  WHERE visit_id IN ({$placeholders})"
-            );
-            $stmt->execute($visitIds);
-            foreach ($stmt->fetchAll() as $sale) {
-                $sale['items'] = json_decode($sale['items'] ?? '[]', true);
-                $retailSales[] = $sale;
-            }
+        $stmt = db()->prepare(
+            "SELECT id, visit_id, items, total, note, created_at
+               FROM retail_sales
+              WHERE DATE(created_at) = :date
+              ORDER BY id"
+        );
+        $stmt->execute([':date' => $date]);
+        foreach ($stmt->fetchAll() as $sale) {
+            $sale['items'] = json_decode($sale['items'] ?? '[]', true);
+            $retailSales[] = $sale;
         }
 
         json_response([
